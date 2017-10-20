@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import { Button, Table, Form, FormGroup, Col, ControlLabel, FormControl } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { fetchCust, fetchProd, addInv } from '../actions'
+import { fetchCust, fetchProd, addInv, invProd } from '../actions'
 
-class InvoiceEdit extends Component {
+class AddInvoice extends Component {
 	constructor(props) {
 		super();
-		this.state={showModal: false}
+		this.state={
+			showModal: false,
+			select: ''
+		}
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.handleAddProduct = this.handleAddProduct.bind(this)
 
@@ -24,17 +27,16 @@ class InvoiceEdit extends Component {
 		})
 
 	}
+	handleSelect(e) {
+		this.setState({
+			select: e.target.value
+		})
+		console.log(e)
+	}
 	handleAddProduct(e) {
 		e.preventDefault()
-		const formValues = () => {
-			return [
-				{
-					pselect: this.pselect[selctedIndex].value
-				}
-			]
-		}
-		console.log(formValues())
-		this.props.dispatch(invProd(formValues()))
+		
+		this.props.dispatch(invProd(this.state.select))
 	}
 	handleSubmit(e) {
 		e.preventDefault()
@@ -49,12 +51,11 @@ class InvoiceEdit extends Component {
 		}
 		this.props.dispatch(addInv(formValues()))
 	}
-	
 
 	render() {
 		return (
 		  	<div className="invoice">
-		  		<h1> Edit Invoice </h1>
+		  		<h1> Add Invoice </h1>
 				<Form horizontal onSubmit={this.handleSubmit}>
 				    <FormGroup controlId="discount">
 						<ControlLabel>Discount (%)</ControlLabel>
@@ -84,8 +85,9 @@ class InvoiceEdit extends Component {
 						<FormControl 
 							componentClass="select" 
 							placeholder="select"
+							value={this.state.select}
+							onSelect={this.handleSelect}
 							ref={(ref) => {this.pselect = ref}} >
-							<option> select... </option>
 						{this.props.products.map(product => (
 							<option value={product.name}>{product.name}</option>
 						))}
@@ -142,4 +144,4 @@ const mapStateToProps = (state) => {
 export default connect(
 	mapStateToProps,
 	null
-)(InvoiceEdit)
+)(AddInvoice)

@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { Button, Modal, Form, FormGroup, Col, ControlLabel, FormControl  } from 'react-bootstrap'
-import {updateProd} from '../actions'
+import {updateCust} from '../actions'
 import { connect } from 'react-redux';
 import { isEqual } from 'lodash';
 
-class EditProd extends Component {
+class EditCust extends Component {
   	constructor(props) {
 	    super(props);
 
 	    this.state = {
 			showModal: false,
-			product: {
+			customer: {
 				name: '',
 				price: ''
 			}
@@ -30,14 +30,14 @@ class EditProd extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (!isEqual(nextProps.product, this.state.product)) {
-		  this.setState({...this.state, product: nextProps.product});
+		if (!isEqual(nextProps.customer, this.state.customer)) {
+		  this.setState({...this.state, customer: nextProps.customer});
 		}
 	}
 
 	handleChange(e, fieldName) {
 	    const fleldVal = e.target.value;
-	    this.setState({form: {...this.state.product, [fieldName]: fleldVal}})
+	    this.setState({form: {...this.state.customer, [fieldName]: fleldVal}})
 	}
 
 	handleSubmit(e) {
@@ -64,7 +64,7 @@ class EditProd extends Component {
 			    <Modal show={this.state.showModal} onHide={this.close}>
 					<Modal.Header closeButton>
 						<Modal.Title>
-							Update a product
+							Update a customer
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
@@ -78,11 +78,43 @@ class EditProd extends Component {
 						        	inputRef={(ref) => {this.name = ref}} 
 						        	type="text" 
 						        	placeholder="Name" 
-						        	value={this.props.product.name}
+						        	value={this.props.customer.name}
 						        	onChange={this.handleChange.bind(this, 'name')}
 	            					/>
 						      </Col>
 						    </FormGroup>
+
+						    <FormGroup controlId="name">
+						      <Col componentClass={ControlLabel} sm={2}>
+						        Name
+						      </Col>
+						      <Col sm={10}>
+						        <FormControl 
+						        	inputRef={(ref) => {this.name = ref}} 
+						        	type="text" 
+						        	placeholder="Name" 
+						        	value={this.props.customer.name}
+						        	onChange={this.handleChange.bind(this, 'name')}
+	            					/>
+						      </Col>
+						    </FormGroup>
+
+						    <FormGroup controlId="name">
+						      <Col componentClass={ControlLabel} sm={2}>
+						        Name
+						      </Col>
+						      <Col sm={10}>
+						        <FormControl 
+						        	inputRef={(ref) => {this.name = ref}} 
+						        	type="text" 
+						        	placeholder="Name" 
+						        	value={this.props.customer.name}
+						        	onChange={this.handleChange.bind(this, 'name')}
+	            					/>
+						      </Col>
+						    </FormGroup>
+
+						    
 
 						    <FormGroup controlId="price">
 						      <Col componentClass={ControlLabel} sm={2}>
@@ -94,7 +126,7 @@ class EditProd extends Component {
 						        	type="number"
 						        	step="0.01" 
 						        	placeholder="Price" 
-						        	value={this.props.product.price}
+						        	value={this.props.customer.price}
 						        	onChange={this.handleChange.bind(this, 'price')}
 	            				/>
 						      </Col>
@@ -120,4 +152,4 @@ class EditProd extends Component {
   	}
 }
 
-export default EditProd
+export default EditCust

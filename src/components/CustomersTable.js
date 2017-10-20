@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { fetchCust, deleteCust } from '../actions/index'
 import { Button, Table, Modal } from 'react-bootstrap'
 import CreateCust from './CreateCust'
+import EditCust from './EditCust'
 import Del from 'react-icons/lib/fa/trash-o'
 
 const url = '/api/customers'
@@ -55,6 +56,7 @@ class CustomersTable extends Component {
 								<td>{customer.name}</td>
 								<td>{customer.address}</td>
 								<td>{customer.phone}</td>
+								<td><EditCust customer={customer}/></td>
 								<td onClick={this.open}> <Del/> </td>
               
 					                <Modal show={this.state.showModal} onHide={this.close}>

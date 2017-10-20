@@ -29,7 +29,6 @@ class invoices extends Component {
     return (
       <div className="tablePage">
         <h1> Invoice List </h1> 
-        <Button href='./InvoiceEdit'> Create </Button>
         <Table responsive>
             <thead>
               <tr>
@@ -57,23 +56,17 @@ class invoices extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    invoices: state.invoices
-  }
-}
-
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onDeleteClick: id => {
-      dispatch(deleteTodo(id));
-    }
+    invoices: state.items.invoices,
+    customers: state.items.customers,
+    products: state.items.products,
+    invProducts: state.items.invProducts
   }
 }
 
 
 const invoicesTable = connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(invoices)
 
 export default invoicesTable

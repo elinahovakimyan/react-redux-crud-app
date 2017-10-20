@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { fetchProd, deleteProd } from '../actions/index'
 import { Button, Table, Modal } from 'react-bootstrap'
 import CreateProd from './CreateProd'
-// import EditProd from './EditProd'
+import EditProd from './EditProd'
 import Del from 'react-icons/lib/fa/trash-o'
 
 const url = '/api/products'
@@ -35,7 +35,6 @@ class ProductsTable extends Component {
     this.close();
   }
   render() {
-    console.log(this.props.products[this.props.products.length-1])
     return (
       <div className="tablePage">
         <h1> Product List </h1> 
@@ -54,7 +53,7 @@ class ProductsTable extends Component {
                 <td>{product.id}</td>
                 <td>{product.name}</td>
                 <td>{product.price}</td>
-                <td> EditProd </td>
+                <td> <EditProd product={product}/> </td>
                 <td onClick={this.open}> <Del/> </td>
               
                 <Modal show={this.state.showModal} onHide={this.close}>
@@ -66,7 +65,9 @@ class ProductsTable extends Component {
                     <Button className="inlinebtn" onClick={this.close}>Cancel</Button>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button onClick={this.close}>Close</Button>
+                    <Button onClick={this.close}>
+                      Close
+                    </Button>
                   </Modal.Footer>
                 </Modal>
               </tr>

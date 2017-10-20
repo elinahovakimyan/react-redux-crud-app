@@ -16,6 +16,13 @@ export const addCust = (customers) => {
 	}
 }
 
+export const updateCust = (customers) => {
+	return {
+		type: 'UPDATE_CUST',
+		payload: customers
+	}
+}
+
 export const deleteCust = (id, customers) => {
 	return {
 		type: 'DELETE_CUST',
@@ -47,6 +54,13 @@ export const invProd = (invProducts) => {
 	}
 }
 
+export const updateProd = (products) => {
+	return {
+		type: 'UPDATE_PROD',
+		payload: products
+	}
+}
+
 export const deleteProd = (id, products) => {
 	return {
 		type: 'DELETE_PROD',
@@ -55,12 +69,6 @@ export const deleteProd = (id, products) => {
 	}
 }
 
-export const updateProd = (id, products) => {
-	return {
-		type: 'UPDATE_PROD',
-		payload: products
-	}
-}
 
 
 

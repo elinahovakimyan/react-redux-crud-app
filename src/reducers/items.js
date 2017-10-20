@@ -1,7 +1,8 @@
 const initialState = {
 	customers: [],
 	products: [],
-	invProducts: []
+	invProducts: [],
+	invoices: []
 }
 
 const items = (state = initialState, action) => {
@@ -12,6 +13,12 @@ const items = (state = initialState, action) => {
 
 		case 'ADD_CUST':
 	        return {...state, customers: state.customers.concat(action.payload
+	        )}
+
+	    case 'UPDATE_CUST':
+	        return {...state, 
+	        	customers: state.customers.concat(action.payload
+	        	// id: products[products.length-1]
 	        )}
 
 	    case 'DELETE_CUST':
@@ -32,12 +39,16 @@ const items = (state = initialState, action) => {
 	    case 'ADD_PROD':
 	        return {...state, 
 	        	products: state.products.concat(action.payload
-	        	// id: products[products.length-1]
 	        )}
 
 	    case 'INV_PROD':
 	        return {...state, 
 	        	invProducts: state.invProducts.concat(action.payload
+	        )}
+
+	    case 'UPDATE_PROD':
+	        return {...state, 
+	        	products: state.products.concat(action.payload
 	        	// id: products[products.length-1]
 	        )}
 

@@ -4,7 +4,7 @@ import CustomersTable from './components/CustomersTable'
 import ProductsTable from './components/ProductsTable'
 import InvoicesTable from './components/InvoicesTable'
 import InvoiceEdit from './components/InvoiceEdit'
-
+import AddInvoice from './components/AddInvoice'
 
 
 const pushState = (obj, title, url) => 
@@ -16,7 +16,7 @@ class App extends Component {
 		pushState(
 			{currentTable: 'invoices'},
 			'Invoices List',
-			'/invoices'
+			'/invoice-list'
 		)
 		this.setState({
 			currentTable: 'invoices'
@@ -42,14 +42,30 @@ class App extends Component {
 			currentTable: 'products'
 		})
 	}
+	fetchInvoiceEdit = () => {
+		pushState(
+			{currentTable: 'invoice-edit'},
+			'Edit Invoice',
+			'/invoice-edit'
+		)
+		this.setState({
+			currentTable: 'invoice-edit'
+		})
+	}
 
 	currentContent() {
-		if(this.state.currentTable === 'customers')
-			return <CustomersTable/>
-		else if (this.state.currentTable === 'products')
-			return <ProductsTable/>
-		else 
-			return <InvoiceEdit/>
+		switch(this.state.currentTable) {
+			case 'customers':
+				return <CustomersTable/>;
+			case 'products':
+				return <ProductsTable/>;
+			case 'invoice-edit':
+				return <InvoiceEdit/>;
+			case 'invoices': 
+				return <InvoicesTable/>;
+			default:
+				return <AddInvoice/>
+		}
 	}
 
 	render() {
