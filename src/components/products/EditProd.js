@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Modal, Form, FormGroup, Col, ControlLabel, FormControl  } from 'react-bootstrap'
-import {updateProd} from '../actions'
+import {updateProd} from '../../actions'
 import { connect } from 'react-redux';
 import { isEqual } from 'lodash';
 
@@ -35,9 +35,11 @@ class EditProd extends Component {
 		}
 	}
 
-	handleChange(e, fieldName) {
+	handleChange(e) {
 	    const fleldVal = e.target.value;
-	    this.setState({form: {...this.state.product, [fieldName]: fleldVal}})
+	    const fieldName = e.target.name;
+	    console.log(e.target.value)
+	    this.setState({...this.state.product, [fieldName]: fleldVal})
 	}
 
 	handleSubmit(e) {
@@ -79,7 +81,7 @@ class EditProd extends Component {
 						        	type="text" 
 						        	placeholder="Name" 
 						        	value={this.props.product.name}
-						        	onChange={this.handleChange.bind(this, 'name')}
+						        	onChange={this.handleChange}
 	            					/>
 						      </Col>
 						    </FormGroup>
@@ -95,7 +97,7 @@ class EditProd extends Component {
 						        	step="0.01" 
 						        	placeholder="Price" 
 						        	value={this.props.product.price}
-						        	onChange={this.handleChange.bind(this, 'price')}
+						        	onChange={this.handleChange}
 	            				/>
 						      </Col>
 						    </FormGroup>

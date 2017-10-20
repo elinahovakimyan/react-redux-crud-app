@@ -1,14 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import store from '../store'
-import { addInv } from '../actions/index'
+import { addInv } from '../../actions/index'
 import {Button, Table} from 'react-bootstrap'
 import {Link} from 'react-router'
-
-const url = '/api/invoices'
-const dispatch = store.dispatch;
-const getState = store.getState;
-
 
 class InvoicesTable extends Component {
   constructor() {
@@ -16,13 +10,13 @@ class InvoicesTable extends Component {
     this.state = {invoices: []}
   }
   componentDidMount(){
-      fetch(url)
+      fetch('api/invoices')
         .then( invoices => invoices.json() )
         .then(invoices => {
           this.setState({
             invoices
           })
-          dispatch(addInv()) 
+          this.props.dispatch(addInv()) 
        })
 
   }

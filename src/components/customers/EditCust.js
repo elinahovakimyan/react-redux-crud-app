@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Modal, Form, FormGroup, Col, ControlLabel, FormControl  } from 'react-bootstrap'
-import {updateCust} from '../actions'
+import {updateCust} from '../../actions'
 import { connect } from 'react-redux';
 import { isEqual } from 'lodash';
 
@@ -85,51 +85,33 @@ class EditCust extends Component {
 						      </Col>
 						    </FormGroup>
 
-						    <FormGroup controlId="name">
+						    <FormGroup controlId="address">
 						      <Col componentClass={ControlLabel} sm={2}>
 						        Name
 						      </Col>
 						      <Col sm={10}>
 						        <FormControl 
-						        	inputRef={(ref) => {this.name = ref}} 
+						        	inputRef={(ref) => {this.address = ref}} 
 						        	type="text" 
-						        	placeholder="Name" 
-						        	value={this.props.customer.name}
-						        	onChange={this.handleChange.bind(this, 'name')}
+						        	placeholder="Address" 
+						        	value={this.props.customer.address}
+						        	onChange={this.handleChange.bind(this, 'address')}
 	            					/>
 						      </Col>
 						    </FormGroup>
 
-						    <FormGroup controlId="name">
+						    <FormGroup controlId="phone">
 						      <Col componentClass={ControlLabel} sm={2}>
 						        Name
 						      </Col>
 						      <Col sm={10}>
 						        <FormControl 
-						        	inputRef={(ref) => {this.name = ref}} 
+						        	inputRef={(ref) => {this.phone = ref}} 
 						        	type="text" 
-						        	placeholder="Name" 
-						        	value={this.props.customer.name}
-						        	onChange={this.handleChange.bind(this, 'name')}
+						        	placeholder="Phone" 
+						        	value={this.props.customer.phone}
+						        	onChange={this.handleChange.bind(this, 'phone')}
 	            					/>
-						      </Col>
-						    </FormGroup>
-
-						    
-
-						    <FormGroup controlId="price">
-						      <Col componentClass={ControlLabel} sm={2}>
-						        Price
-						      </Col>
-						      <Col sm={10}>
-						        <FormControl 
-						        	inputRef={(ref) => {this.price = ref}}
-						        	type="number"
-						        	step="0.01" 
-						        	placeholder="Price" 
-						        	value={this.props.customer.price}
-						        	onChange={this.handleChange.bind(this, 'price')}
-	            				/>
 						      </Col>
 						    </FormGroup>
 

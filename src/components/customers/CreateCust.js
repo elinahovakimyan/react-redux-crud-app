@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, Form, FormGroup, Col, ControlLabel, FormControl } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { addCust } from '../actions'
+import { addCust } from '../../actions'
 
 class CreateCust extends Component {
 	constructor(props) {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Modal, Form, FormGroup, Col, ControlLabel, FormControl  } from 'react-bootstrap'
-import {addProd} from '../actions'
+import {addProd} from '../../actions'
 
 class CreateProd extends Component {
 	constructor(props) {
@@ -23,7 +23,7 @@ class CreateProd extends Component {
 		const formValues = () => {
 			return [
 				{
-					id: this.id.value,
+					id: this.productId.value,
 					name: this.name.value,
 					price: this.price.value,
 				}
@@ -34,7 +34,7 @@ class CreateProd extends Component {
 	}
 
 	render() {
-		const {products} = this.props
+		const {products} = this.state
 		return (
 		  <div className="btnCreate">
 		    <Button onClick={this.open}>
@@ -53,10 +53,10 @@ class CreateProd extends Component {
 					      </Col>
 					      <Col sm={10}>
 					        <FormControl 
-					        	inputRef={(ref) => {this.id = ref}} 
+					        	inputRef={(ref) => {this.productId = ref}} 
 					        	type="number" 
 					        	placeholder="Id"
-					        	value={products[products.length-1].id+1} 
+					        	value={products[this.state.products.length-1].productId+1} 
 					        />
 					      </Col>
 					    </FormGroup>

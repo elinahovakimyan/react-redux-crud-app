@@ -47,7 +47,7 @@ export const addProd = (products) => {
 	}
 }
 
-export const invProd = (prodName) => {
+export const invProd = (prodName, invProducts) => {
 	return {
 		type: 'INV_PROD',
 		name: prodName,
@@ -69,8 +69,6 @@ export const deleteProd = (id, products) => {
 		id
 	}
 }
-
-
 
 
 //Invoices 

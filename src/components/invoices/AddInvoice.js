@@ -1,14 +1,19 @@
 import React, { Component } from 'react'
 import { Button, Table, Form, FormGroup, Col, ControlLabel, FormControl } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { fetchCust, fetchProd, addInv } from '../actions'
+import { fetchCust, fetchProd, addInv, invProd } from '../../actions'
 
-class InvoiceEdit extends Component {
+class AddInvoice extends Component {
 	constructor(props) {
 		super();
-		this.state={showModal: false}
+		this.state={
+			showModal: false,
+			select: '',
+			invProducts: []
+		}
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.handleAddProduct = this.handleAddProduct.bind(this)
+		this.handleSelect = this.handleSelect.bind(this)
 
 	}
 	componentWillMount(){
@@ -24,18 +29,17 @@ class InvoiceEdit extends Component {
 		})
 
 	}
+	handleSelect(e) {
+		this.setState({
+			select: e.target.value
+		})
+	}
 	handleAddProduct(e) {
 		e.preventDefault()
-		const formValues = () => {
-			return [
-				{
-					pselect: this.pselect[selctedIndex].value
-				}
-			]
-		}
-		console.log(formValues())
-		this.props.dispatch(invProd(formValues()))
+		this.props.dispatch(invProd(this.state.select))
+		console.log(this.state.select)
 	}
+
 	handleSubmit(e) {
 		e.preventDefault()
 		const formValues = () => {
@@ -49,13 +53,15 @@ class InvoiceEdit extends Component {
 		}
 		this.props.dispatch(addInv(formValues()))
 	}
-	
 
 	render() {
 		return (
 		  	<div className="invoice">
-		  		<h1> Edit Invoice </h1>
+		  		<h1> Add Invoice </h1>
 				<Form horizontal onSubmit={this.handleSubmit}>
+					<Button type="submit" className="inlinebtn">
+						Add Invoice 
+					</Button>
 				    <FormGroup controlId="discount">
 						<ControlLabel>Discount (%)</ControlLabel>
 						<FormControl 
@@ -69,13 +75,11 @@ class InvoiceEdit extends Component {
 						<ControlLabel>Customer</ControlLabel>
 						<FormControl componentClass="select" placeholder="Customer">
 						{this.props.customers.map(customer => (
-							<option value={customer.name}>{customer.name}</option>
+							<option value={customer.name} >{customer.name}</option>
 						))}
 						</FormControl>
 					</FormGroup>
-					<Button type="submit">
-						Add Invoice 
-					</Button>
+					
 				</Form>
 
 				<Form horizontal onSubmit={this.handleAddProduct}>
@@ -84,26 +88,25 @@ class InvoiceEdit extends Component {
 						<FormControl 
 							componentClass="select" 
 							placeholder="select"
-							ref={(ref) => {this.pselect = ref}} >
-							<option> select... </option>
+							onChange={this.handleSelect} 
+							value={this.state.select}>
 						{this.props.products.map(product => (
-							<option value={product.name}>{product.name}</option>
+							<option value={product.name} key={product.id}>{product.name}</option>
 						))}
 						</FormControl>
 					</FormGroup>
-
 				    <FormGroup>
 				        <Button type="submit">
-				          Add
+				        	Add
 				        </Button>
 				    </FormGroup>
 				</Form>
 				<Table responsive>
 		          <thead>
 		            <tr>
-		              <th>Name</th>
-		              <th>Price</th>
-		              <th> Qty </th>
+						<th>Name</th>
+						<th>Price</th>
+						<th> Qty </th>
 		            </tr>
 		          </thead>
 		          <tbody>
@@ -142,4 +145,4 @@ const mapStateToProps = (state) => {
 export default connect(
 	mapStateToProps,
 	null
-)(InvoiceEdit)
+)(AddInvoice)

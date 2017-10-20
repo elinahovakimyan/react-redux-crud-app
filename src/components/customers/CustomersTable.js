@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { deleteCust } from '../actions/index'
+import { deleteCust } from '../../actions/index'
 import { Button, Table, Modal } from 'react-bootstrap'
 import CreateCust from './CreateCust'
 import EditCust from './EditCust'
@@ -9,7 +9,7 @@ import Del from 'react-icons/lib/fa/trash-o'
 class CustomersTable extends Component {
 	constructor() {
 		super();
-		this.props = {
+		this.state = {
 			customers: []
 		}
 		this.handleDelete = this.handleDelete.bind(this);

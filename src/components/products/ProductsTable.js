@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { deleteProd } from '../actions/index'
+import { deleteProd } from '../../actions/index'
 import { Button, Table, Modal } from 'react-bootstrap'
 import CreateProd from './CreateProd'
 import EditProd from './EditProd'
@@ -9,9 +9,6 @@ import Del from 'react-icons/lib/fa/trash-o'
 class ProductsTable extends Component {
   constructor(props) {
     super();
-    this.props = {
-      products: []
-    }
     this.handleDelete = this.handleDelete.bind(this);
     this.state={showModal: false}
     this.close = this.close.bind(this)
