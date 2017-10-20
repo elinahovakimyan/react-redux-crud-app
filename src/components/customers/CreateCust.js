@@ -6,7 +6,9 @@ import { addCust } from '../../actions'
 class CreateCust extends Component {
 	constructor(props) {
 		super();
-		this.state={showModal: false}
+		this.state={
+			showModal: false
+		}
 		this.close = this.close.bind(this)
 		this.open = this.open.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this) 
@@ -17,24 +19,23 @@ class CreateCust extends Component {
 	open() {
 		this.setState({ showModal: true });
 	}
+	createId() {
+		const { customers } = this.props
+		return customers.map(item => item.id)[customers.length-1] + 1
+	}
 	handleSubmit(e) {
 		e.preventDefault()
-		const formValues = () => {
-			return [
-				{
-					id: this.id.value,
-					name: this.name.value,
-					address: this.address.value,
-					phone: this.phone.value
-				}
-			]
+		const formValues = {
+			id: this.createId(),
+			name: this.name.value,
+			address: this.address.value,
+			phone: this.phone.value
 		}
-		this.props.dispatch(addCust(formValues()))
+		this.props.dispatch(addCust(formValues))
 		this.close();
 	}
 
 	render() {
-		const {customers} = this.props
 		return (
 		  <div className="btnCreate">
 		    <Button onClick={this.open}>
@@ -47,19 +48,6 @@ class CreateCust extends Component {
 				</Modal.Header>
 				<Modal.Body>
 					<Form horizontal onSubmit={this.handleSubmit}>
-					    <FormGroup controlId="name" className="invisibleInput">
-					      <Col componentClass={ControlLabel} sm={2}>
-					        Id
-					      </Col>
-					      <Col sm={10}>
-					        <FormControl 
-					        	inputRef={(ref) => {this.id = ref}} 
-					        	type="number" 
-					        	placeholder="Id"
-					        	value={customers[customers.length-1].id+1} 
-					        />
-					      </Col>
-					    </FormGroup>
 					    
 					    <FormGroup controlId="name">
 					      <Col componentClass={ControlLabel} sm={2}>
@@ -118,14 +106,4 @@ class CreateCust extends Component {
 	}
 };
 
-const mapStateToProps = (state) => {
-	return {
-		customers: state.items.customers
-	}
-}
-
-
-export default connect(
-	mapStateToProps,
-	null
-)(CreateCust)
+export default connect()(CreateCust)

@@ -32,16 +32,16 @@ class CustomersTable extends Component {
 			<div className="tablePage">
 				<div className="titlepart">
 					<h1> Customer List </h1> 
-					<CreateCust/>
+					<CreateCust customers={this.props.customers} />
 				</div>
 				<Table responsive>
 				    <thead>
-				      <tr>
-				        <th>#</th>
-				        <th>Name</th>
-				        <th>Address</th>
-				        <th>Phone</th>
-				      </tr>
+						<tr>
+							<th>#</th>
+							<th>Name</th>
+							<th>Address</th>
+							<th>Phone</th>
+						</tr>
 				    </thead>
 				    <tbody>
 			        	{this.props.customers.map(customer => (

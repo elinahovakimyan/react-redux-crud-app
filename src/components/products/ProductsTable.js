@@ -29,7 +29,7 @@ class ProductsTable extends Component {
     return (
       <div className="tablePage">
         <h1> Product List </h1> 
-        <CreateProd/>
+        <CreateProd products={this.props.products}/>
         <Table responsive>
           <thead>
             <tr>

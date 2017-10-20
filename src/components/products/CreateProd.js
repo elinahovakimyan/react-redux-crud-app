@@ -6,7 +6,9 @@ import {addProd} from '../../actions'
 class CreateProd extends Component {
 	constructor(props) {
 		super();
-		this.state={showModal: false}
+		this.state={
+			showModal: false		
+		}
 		this.close = this.close.bind(this)
 		this.open = this.open.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this) 
@@ -18,18 +20,18 @@ class CreateProd extends Component {
 	open() {
 		this.setState({ showModal: true });
 	}
+	createId() {
+		const { products } = this.props
+		return products.map(item => item.id)[products.length-1] + 1
+	}
 	handleSubmit(e) {
 		e.preventDefault()
-		const formValues = () => {
-			return [
-				{
-					id: this.productId.value,
-					name: this.name.value,
-					price: this.price.value,
-				}
-			]
+		const formValues = {
+			id: this.createId(),
+			name: this.name.value,
+			price: this.price.value,
 		}
-		this.props.dispatch(addProd(formValues()))
+		this.props.dispatch(addProd(formValues))
 		this.close();
 	}
 
@@ -47,19 +49,6 @@ class CreateProd extends Component {
 				</Modal.Header>
 				<Modal.Body>
 					<Form horizontal onSubmit={this.handleSubmit}>
-						<FormGroup controlId="name" className="invisibleInput">
-					      <Col componentClass={ControlLabel} sm={2}>
-					        Id
-					      </Col>
-					      <Col sm={10}>
-					        <FormControl 
-					        	inputRef={(ref) => {this.productId = ref}} 
-					        	type="number" 
-					        	placeholder="Id"
-					        	value={products[this.state.products.length-1].productId+1} 
-					        />
-					      </Col>
-					    </FormGroup>
 
 					    <FormGroup controlId="name">
 					      <Col componentClass={ControlLabel} sm={2}>
