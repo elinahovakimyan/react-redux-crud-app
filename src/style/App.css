@@ -1,0 +1,25 @@
+.tablePage, .invoice {
+	margin: 30px 50px;
+}
+
+h1 {
+	display: inline-block;
+	margin: 40px 15px 20px 5px;
+}
+
+.btn {
+	margin: 0px 20px 0px 15px;
+}
+
+.btnCreate, .inlinebtn {
+	display: inline-block;
+}
+
+.discount {
+	border-radius: 0;
+	width: 40%;
+}
+
+a {
+	cursor: pointer;
+}
