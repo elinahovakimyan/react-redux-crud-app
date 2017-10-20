@@ -22,7 +22,7 @@ class CreateCust extends Component {
 		const formValues = () => {
 			return [
 				{
-					id: this.props.customers[customers.length-1].id+1,
+					id: this.id.value,
 					name: this.name.value,
 					address: this.address.value,
 					phone: this.phone.value
@@ -34,6 +34,7 @@ class CreateCust extends Component {
 	}
 
 	render() {
+		const {customers} = this.props
 		return (
 		  <div className="btnCreate">
 		    <Button onClick={this.open}>
@@ -46,6 +47,20 @@ class CreateCust extends Component {
 				</Modal.Header>
 				<Modal.Body>
 					<Form horizontal onSubmit={this.handleSubmit}>
+					    <FormGroup controlId="name" className="invisibleInput">
+					      <Col componentClass={ControlLabel} sm={2}>
+					        Id
+					      </Col>
+					      <Col sm={10}>
+					        <FormControl 
+					        	inputRef={(ref) => {this.id = ref}} 
+					        	type="number" 
+					        	placeholder="Id"
+					        	value={customers[customers.length-1].id+1} 
+					        />
+					      </Col>
+					    </FormGroup>
+					    
 					    <FormGroup controlId="name">
 					      <Col componentClass={ControlLabel} sm={2}>
 					        Name
@@ -58,6 +73,7 @@ class CreateCust extends Component {
 					        />
 					      </Col>
 					    </FormGroup>
+
 
 					    <FormGroup controlId="address">
 					      <Col componentClass={ControlLabel} sm={2}>

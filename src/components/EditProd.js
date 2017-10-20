@@ -9,9 +9,6 @@ class EditProd extends Component {
 	    super(props, context);
 
 	    this.state = {
-			...this.state,
-			id: this.props.params.product.id,
-			product: {name: '', price: ''},
 			showModal: false
 		},
 		this.close = this.close.bind(this)
@@ -24,19 +21,6 @@ class EditProd extends Component {
 
 	open() {
 		this.setState({ showModal: true });
-	}
-	handleSubmit(e) {
-		e.preventDefault()
-		const formValues = () => {
-			return [
-				{
-					name: this.name.value,
-					price: this.price.value,
-				}
-			]
-		}
-		this.props.dispatch(addProd(formValues()))
-		this.close();
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -56,12 +40,18 @@ class EditProd extends Component {
 		this.setState(Object.assign({}, this.state, {product}));
 	}
 
-	handleSubmit() {
-		if (this.state.product.id) {
-		  	this.context.store.dispatch(productsActions.updateproduct(this.state.product));
-	} 	else {
-			this.context.store.dispatch(productsActions.createproduct(this.state.product));
+	handleSubmit(e) {
+		e.preventDefault()
+		const formValues = () => {
+			return [
+				{
+					name: this.name.value,
+					price: this.price.value,
+				}
+			]
 		}
+		this.props.dispatch(updateProd(formValues()))
+		this.close();
 	}
 
 	render() {
@@ -75,6 +65,7 @@ class EditProd extends Component {
 					<Modal.Header closeButton>
 						<Modal.Title>Update a product</Modal.Title>
 					</Modal.Header>
+					{this.props.products.map(product => (
 					<Modal.Body>
 						<Form horizontal onSubmit={this.handleSubmit}>
 						    <FormGroup controlId="name">
@@ -86,7 +77,7 @@ class EditProd extends Component {
 						        	inputRef={(ref) => {this.name = ref}} 
 						        	type="text" 
 						        	placeholder="Name" 
-						        	value={this.state.product.name}
+						        	value={product.name}
 	            					onChange={this.handleChange.bind(this, 'name')}/>
 						      </Col>
 						    </FormGroup>
@@ -101,7 +92,7 @@ class EditProd extends Component {
 						        	type="number"
 						        	step="0.01" 
 						        	placeholder="Price" 
-						        	value={this.state.product.price}
+						        	value={product.price}
 	            					onChange={this.handleChange.bind(this, 'body')}/>
 						      </Col>
 						    </FormGroup>
@@ -115,6 +106,7 @@ class EditProd extends Component {
 						    </FormGroup>
 						</Form>
 					</Modal.Body>
+					))}
 					<Modal.Footer>
 						<Button onClick={this.close}>Close</Button>
 					</Modal.Footer>
@@ -127,7 +119,7 @@ class EditProd extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		product: productsSelectors.getproduct(state, props.params.product.id)
+		products: state.items.products
 	}
 }
 

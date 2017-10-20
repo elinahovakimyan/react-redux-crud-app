@@ -23,6 +23,7 @@ class CreateProd extends Component {
 		const formValues = () => {
 			return [
 				{
+					id: this.id.value,
 					name: this.name.value,
 					price: this.price.value,
 				}
@@ -33,6 +34,7 @@ class CreateProd extends Component {
 	}
 
 	render() {
+		const {products} = this.props
 		return (
 		  <div className="btnCreate">
 		    <Button onClick={this.open}>
@@ -45,6 +47,20 @@ class CreateProd extends Component {
 				</Modal.Header>
 				<Modal.Body>
 					<Form horizontal onSubmit={this.handleSubmit}>
+						<FormGroup controlId="name" className="invisibleInput">
+					      <Col componentClass={ControlLabel} sm={2}>
+					        Id
+					      </Col>
+					      <Col sm={10}>
+					        <FormControl 
+					        	inputRef={(ref) => {this.id = ref}} 
+					        	type="number" 
+					        	placeholder="Id"
+					        	value={products[products.length-1].id+1} 
+					        />
+					      </Col>
+					    </FormGroup>
+
 					    <FormGroup controlId="name">
 					      <Col componentClass={ControlLabel} sm={2}>
 					        Name

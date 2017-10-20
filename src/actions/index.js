@@ -55,6 +55,15 @@ export const deleteProd = (id, products) => {
 	}
 }
 
+export const updateProd = (id, products) => {
+	return {
+		type: 'UPDATE_PROD',
+		payload: products
+	}
+}
+
+
+
 //Invoices 
 
 export const addInv = (id, customer, discount, total) => {

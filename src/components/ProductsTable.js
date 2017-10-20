@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { fetchProd, deleteProd } from '../actions/index'
 import { Button, Table, Modal } from 'react-bootstrap'
 import CreateProd from './CreateProd'
-//import EditProd from './EditProd'
+// import EditProd from './EditProd'
 import Del from 'react-icons/lib/fa/trash-o'
 
 const url = '/api/products'
@@ -54,6 +54,7 @@ class ProductsTable extends Component {
                 <td>{product.id}</td>
                 <td>{product.name}</td>
                 <td>{product.price}</td>
+                <td> EditProd </td>
                 <td onClick={this.open}> <Del/> </td>
               
                 <Modal show={this.state.showModal} onHide={this.close}>

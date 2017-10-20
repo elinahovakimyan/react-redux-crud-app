@@ -23,3 +23,7 @@ h1 {
 a {
 	cursor: pointer;
 }
+
+.invisibleInput {
+	display: none;
+}
