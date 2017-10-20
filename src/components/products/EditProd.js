@@ -29,30 +29,24 @@ class EditProd extends Component {
 		this.setState({ showModal: true });
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (!isEqual(nextProps.product, this.state.product)) {
-		  this.setState({...this.state, product: nextProps.product});
-		}
-	}
+	// componentWillReceiveProps(nextProps) {
+	// 	if (!isEqual(nextProps.product, this.state.product)) {
+	// 	  this.setState({...this.state, product: nextProps.product});
+	// 	}
+	// }
 
-	handleChange(e) {
+	handleChange(e) {	    
 	    const fleldVal = e.target.value;
-	    const fieldName = e.target.name;
-	    console.log(e.target.value)
 	    this.setState({...this.state.product, [fieldName]: fleldVal})
 	}
 
 	handleSubmit(e) {
 		e.preventDefault()
-		const formValues = () => {
-			return [
-				{
-					name: this.name.value,
-					price: this.price.value,
-				}
-			]
+		const formValues = {
+			name: this.name.value,
+			price: this.price.value,
 		}
-		this.props.dispatch(updateProd(formValues()))
+		this.props.dispatch(updateProd(formValues))
 		this.close();
 	}
 
@@ -81,7 +75,7 @@ class EditProd extends Component {
 						        	type="text" 
 						        	placeholder="Name" 
 						        	value={this.props.product.name}
-						        	onChange={this.handleChange}
+						        	onChange={this.handleChange.bind(this, 'name')}
 	            					/>
 						      </Col>
 						    </FormGroup>
@@ -97,7 +91,7 @@ class EditProd extends Component {
 						        	step="0.01" 
 						        	placeholder="Price" 
 						        	value={this.props.product.price}
-						        	onChange={this.handleChange}
+						        	onChange={this.handleChange.bind(this, 'price')}
 	            				/>
 						      </Col>
 						    </FormGroup>

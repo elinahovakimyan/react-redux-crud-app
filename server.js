@@ -12,7 +12,7 @@ sequelize = new Sequelize('sqlite://' + path.join(__dirname, 'invoices.sqlite'),
 });
 
 Customer = sequelize.define('customers', { 
-  custId: {
+  id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true
@@ -29,7 +29,7 @@ Customer = sequelize.define('customers', {
 });
 
 Product = sequelize.define('products', { 
-  prodId: {
+  id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true
