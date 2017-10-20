@@ -12,6 +12,7 @@ class AddInvoice extends Component {
 		}
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.handleAddProduct = this.handleAddProduct.bind(this)
+		this.handleSelect = this.handleSelect.bind(this)
 
 	}
 	componentWillMount(){
@@ -31,13 +32,13 @@ class AddInvoice extends Component {
 		this.setState({
 			select: e.target.value
 		})
-		console.log(e)
 	}
 	handleAddProduct(e) {
 		e.preventDefault()
-		
 		this.props.dispatch(invProd(this.state.select))
+		console.log(this.state.select)
 	}
+
 	handleSubmit(e) {
 		e.preventDefault()
 		const formValues = () => {
@@ -57,6 +58,9 @@ class AddInvoice extends Component {
 		  	<div className="invoice">
 		  		<h1> Add Invoice </h1>
 				<Form horizontal onSubmit={this.handleSubmit}>
+					<Button type="submit" className="inlinebtn">
+						Add Invoice 
+					</Button>
 				    <FormGroup controlId="discount">
 						<ControlLabel>Discount (%)</ControlLabel>
 						<FormControl 
@@ -70,13 +74,11 @@ class AddInvoice extends Component {
 						<ControlLabel>Customer</ControlLabel>
 						<FormControl componentClass="select" placeholder="Customer">
 						{this.props.customers.map(customer => (
-							<option value={customer.name}>{customer.name}</option>
+							<option value={customer.name} >{customer.name}</option>
 						))}
 						</FormControl>
 					</FormGroup>
-					<Button type="submit">
-						Add Invoice 
-					</Button>
+					
 				</Form>
 
 				<Form horizontal onSubmit={this.handleAddProduct}>
@@ -85,27 +87,25 @@ class AddInvoice extends Component {
 						<FormControl 
 							componentClass="select" 
 							placeholder="select"
-							value={this.state.select}
-							onSelect={this.handleSelect}
-							ref={(ref) => {this.pselect = ref}} >
+							onChange={this.handleSelect} 
+							value={this.state.select}>
 						{this.props.products.map(product => (
-							<option value={product.name}>{product.name}</option>
+							<option value={product.name} key={product.id}>{product.name}</option>
 						))}
 						</FormControl>
 					</FormGroup>
-
 				    <FormGroup>
 				        <Button type="submit">
-				          Add
+				        	Add
 				        </Button>
 				    </FormGroup>
 				</Form>
 				<Table responsive>
 		          <thead>
 		            <tr>
-		              <th>Name</th>
-		              <th>Price</th>
-		              <th> Qty </th>
+						<th>Name</th>
+						<th>Price</th>
+						<th> Qty </th>
 		            </tr>
 		          </thead>
 		          <tbody>

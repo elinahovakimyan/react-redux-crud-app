@@ -49,7 +49,6 @@ const items = (state = initialState, action) => {
 	    case 'UPDATE_PROD':
 	        return {...state, 
 	        	products: state.products.concat(action.payload
-	        	// id: products[products.length-1]
 	        )}
 
 		case 'DELETE_PROD':

@@ -1,27 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchProd, deleteProd } from '../actions/index'
+import { deleteProd } from '../actions/index'
 import { Button, Table, Modal } from 'react-bootstrap'
 import CreateProd from './CreateProd'
 import EditProd from './EditProd'
 import Del from 'react-icons/lib/fa/trash-o'
 
-const url = '/api/products'
-
 class ProductsTable extends Component {
-  constructor() {
+  constructor(props) {
     super();
+    this.props = {
+      products: []
+    }
     this.handleDelete = this.handleDelete.bind(this);
     this.state={showModal: false}
     this.close = this.close.bind(this)
     this.open = this.open.bind(this)
-  }
-  componentWillMount(){
-      fetch(url)
-        .then( products => products.json() )
-        .then(products => {
-          this.props.onFetch(products)
-      })
   }
   close() {
     this.setState({ showModal: false });
@@ -90,9 +84,6 @@ const mapDispatchToProps = dispatch => {
   return {
     onDeleteClick(id, products) {
       dispatch(deleteProd(id, products));
-    },
-    onFetch(products) {
-      dispatch(fetchProd(products))
     }
   }
 }

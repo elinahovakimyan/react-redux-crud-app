@@ -47,9 +47,10 @@ export const addProd = (products) => {
 	}
 }
 
-export const invProd = (invProducts) => {
+export const invProd = (prodName) => {
 	return {
 		type: 'INV_PROD',
+		name: prodName,
 		payload: invProducts
 	}
 }
@@ -74,13 +75,10 @@ export const deleteProd = (id, products) => {
 
 //Invoices 
 
-export const addInv = (id, customer, discount, total) => {
+export const addInv = (products) => {
 	return {
 		type: 'ADD_INV',
-		id: nextId++,
-		customer,
-		discount,
-		total
+		payload: products
 	}
 }
 

@@ -1,27 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCust, deleteCust } from '../actions/index'
+import { deleteCust } from '../actions/index'
 import { Button, Table, Modal } from 'react-bootstrap'
 import CreateCust from './CreateCust'
 import EditCust from './EditCust'
 import Del from 'react-icons/lib/fa/trash-o'
 
-const url = '/api/customers'
-
 class CustomersTable extends Component {
 	constructor() {
 		super();
+		this.props = {
+			customers: []
+		}
 		this.handleDelete = this.handleDelete.bind(this);
 		this.state={showModal: false}
 		this.close = this.close.bind(this)
 		this.open = this.open.bind(this)
-	}
-	componentWillMount(){
-		fetch(url)
-			.then( products => products.json() )
-			.then(products => {
-			  this.props.onFetch(products)
-		})
 	}
 	close() {
 		this.setState({ showModal: false });
@@ -59,18 +53,20 @@ class CustomersTable extends Component {
 								<td><EditCust customer={customer}/></td>
 								<td onClick={this.open}> <Del/> </td>
               
-					                <Modal show={this.state.showModal} onHide={this.close}>
-					                  <Modal.Header closeButton>
-					                    <Modal.Title>Do you want to delete?</Modal.Title>
-					                  </Modal.Header>
-					                  <Modal.Body>
-					                    <Button className="inlinebtn" onClick={this.handleDelete.bind(this, customer.id)}> Delete </Button>
-					                    <Button className="inlinebtn" onClick={this.close}>Cancel</Button>
-					                  </Modal.Body>
-					                  <Modal.Footer>
-					                    <Button onClick={this.close}>Close</Button>
-					                  </Modal.Footer>
-					                </Modal>
+				                <Modal show={this.state.showModal} onHide={this.close}>
+				                  <Modal.Header closeButton>
+				                    <Modal.Title>Do you want to delete?</Modal.Title>
+				                  </Modal.Header>
+				                  <Modal.Body>
+				                    <Button className="inlinebtn" onClick={this.handleDelete.bind(this, customer.id)}> Delete </Button>
+				                    <Button className="inlinebtn" onClick={this.close}>Cancel</Button>
+				                  </Modal.Body>
+				                  <Modal.Footer>
+				                    <Button onClick={this.close}>
+				                    	Close
+				                    </Button>
+				                  </Modal.Footer>
+				                </Modal>
 							</tr>
 	   					))}
 				    </tbody>
@@ -90,9 +86,6 @@ const mapDispatchToProps = dispatch => {
 	return {
 		onDeleteClick(id, customers) {
 			dispatch(deleteCust(id, customers));
-		},
-		onFetch(customers) {
-			dispatch(fetchCust(customers))
 		}
 	}
 }

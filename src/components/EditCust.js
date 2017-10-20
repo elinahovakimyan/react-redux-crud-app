@@ -12,7 +12,8 @@ class EditCust extends Component {
 			showModal: false,
 			customer: {
 				name: '',
-				price: ''
+				address: '',
+				phone: ''
 			}
 		},
 		this.close = this.close.bind(this)

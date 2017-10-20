@@ -3,13 +3,14 @@ import { connect } from 'react-redux'
 import store from '../store'
 import { addInv } from '../actions/index'
 import {Button, Table} from 'react-bootstrap'
+import {Link} from 'react-router'
 
 const url = '/api/invoices'
 const dispatch = store.dispatch;
 const getState = store.getState;
 
 
-class invoices extends Component {
+class InvoicesTable extends Component {
   constructor() {
     super();
     this.state = {invoices: []}
@@ -29,6 +30,7 @@ class invoices extends Component {
     return (
       <div className="tablePage">
         <h1> Invoice List </h1> 
+        <Button> Create </Button>
         <Table responsive>
             <thead>
               <tr>
@@ -63,10 +65,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-
-const invoicesTable = connect(
+export default connect(
   mapStateToProps,
   null
-)(invoices)
-
-export default invoicesTable
+)(InvoicesTable)
