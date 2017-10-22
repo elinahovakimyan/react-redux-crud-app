@@ -19,8 +19,6 @@ class EditCust extends Component {
 		this.close = this.close.bind(this)
 		this.open = this.open.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this) 
-		this.handleChange = this.handleChange.bind(this) 
-
 	}
 	close() {
 		this.setState({ showModal: false });
@@ -36,9 +34,8 @@ class EditCust extends Component {
 		}
 	}
 
-	handleChange(e, fieldName) {
-	    const fleldVal = e.target.value;
-	    this.setState({form: {...this.state.customer, [fieldName]: fleldVal}})
+	handleChange(fieldName) {
+	    this.setState({ fieldName: this.fieldName.value })
 	}
 
 	handleSubmit(e) {
@@ -87,7 +84,7 @@ class EditCust extends Component {
 
 						    <FormGroup controlId="address">
 						      <Col componentClass={ControlLabel} sm={2}>
-						        Name
+						        Address
 						      </Col>
 						      <Col sm={10}>
 						        <FormControl 
@@ -102,7 +99,7 @@ class EditCust extends Component {
 
 						    <FormGroup controlId="phone">
 						      <Col componentClass={ControlLabel} sm={2}>
-						        Name
+						        Phone
 						      </Col>
 						      <Col sm={10}>
 						        <FormControl 

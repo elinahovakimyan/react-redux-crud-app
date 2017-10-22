@@ -7,24 +7,16 @@ import {Link} from 'react-router'
 class InvoicesTable extends Component {
   constructor() {
     super();
-    this.state = {invoices: []}
-  }
-  componentDidMount(){
-      fetch('api/invoices')
-        .then( invoices => invoices.json() )
-        .then(invoices => {
-          this.setState({
-            invoices
-          })
-          this.props.dispatch(addInv()) 
-       })
-
+    this.state = {
+      invoices: []
+    }
   }
   render() {
     return (
       <div className="tablePage">
         <h1> Invoice List </h1> 
-        <Button> Create </Button>
+        <Button> <Link to="/add-invoice" className="link" activeClassName="active">Create </Link> </Button>
+
         <Table responsive>
             <thead>
               <tr>

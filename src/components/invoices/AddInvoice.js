@@ -9,24 +9,13 @@ class AddInvoice extends Component {
 		this.state={
 			showModal: false,
 			select: '',
-			invProducts: []
+			invProducts: [],
+			products: [],
+			customers: []
 		}
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.handleAddProduct = this.handleAddProduct.bind(this)
 		this.handleSelect = this.handleSelect.bind(this)
-
-	}
-	componentWillMount(){
-		fetch('/api/customers')
-			.then( customers => customers.json() )
-			.then(customers => {
-			  this.props.dispatch(fetchCust(customers))
-		})
-		fetch('/api/products')
-			.then( products => products.json() )
-			.then(products => {
-			  this.props.dispatch(fetchProd(products))
-		})
 
 	}
 	handleSelect(e) {
@@ -37,7 +26,8 @@ class AddInvoice extends Component {
 	handleAddProduct(e) {
 		e.preventDefault()
 		this.props.dispatch(invProd(this.state.select))
-		console.log(this.state.select)
+		console.log('invProducts Add:', this.state.invProducts)
+
 	}
 
 	handleSubmit(e) {

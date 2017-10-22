@@ -10,10 +10,10 @@ class CustomersTable extends Component {
 	constructor() {
 		super();
 		this.state = {
-			customers: []
+			customers: [],
+			showModal: false
 		}
-		this.handleDelete = this.handleDelete.bind(this);
-		this.state={showModal: false}
+		this.handleDelete = this.handleDelete.bind(this)
 		this.close = this.close.bind(this)
 		this.open = this.open.bind(this)
 	}
@@ -58,7 +58,12 @@ class CustomersTable extends Component {
 				                    <Modal.Title>Do you want to delete?</Modal.Title>
 				                  </Modal.Header>
 				                  <Modal.Body>
-				                    <Button className="inlinebtn" onClick={this.handleDelete.bind(this, customer.id)}> Delete </Button>
+				                    <Button className="inlinebtn" onClick={(id=customer.id, customers) => {
+				                    	debugger;
+										this.props.dispatch(deleteCust(id, customers));
+										this.close();
+										console.log("ok, it's here")
+									}}> Delete </Button>
 				                    <Button className="inlinebtn" onClick={this.close}>Cancel</Button>
 				                  </Modal.Body>
 				                  <Modal.Footer>
@@ -82,15 +87,7 @@ const mapStateToProps = (state) => {
 	}
 }
 
-const mapDispatchToProps = dispatch => {
-	return {
-		onDeleteClick(id, customers) {
-			dispatch(deleteCust(id, customers));
-		}
-	}
-}
-
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps
+	null
 )(CustomersTable)

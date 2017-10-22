@@ -2,7 +2,8 @@ import React, {PropTypes} from 'react';
 import { Link, IndexLink } from 'react-router';
 import {Navbar, Nav, NavItem} from 'react-bootstrap'
 
-const Header = () => {
+
+const Navigation = () => {
   return (
     <Navbar>
 		<Navbar.Header>
@@ -11,12 +12,12 @@ const Header = () => {
 			</Navbar.Brand>
 		</Navbar.Header>
 		<Nav>
-			<NavItem><Link to="/" activeClassName="active">Invoices</Link></NavItem>
-			<NavItem><Link to="/customers" activeClassName="active">Customers</Link></NavItem>
-			<NavItem><Link to="/products" activeClassName="active">Products</Link></NavItem>
+			<NavItem><Link to="/" className="link" activeClassName="active">Invoices</Link></NavItem>
+			<NavItem><Link to="/customers" className="link" activeClassName="active">Customers</Link></NavItem>
+			<NavItem><Link to="/products" className="link" activeClassName="active">Products</Link></NavItem>
 		</Nav>
 	</Navbar>
   );
 };
 
-export default Header;
+export default Navigation;

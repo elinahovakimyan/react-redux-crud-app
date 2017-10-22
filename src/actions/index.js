@@ -23,12 +23,12 @@ export const updateCust = (customers) => {
 	}
 }
 
-export const deleteCust = (id, customers) => {
+export const deleteCust = (id) => {
 	return {
 		type: 'DELETE_CUST',
-		payload: customers,
-		id
+		id 
 	}
+	console.log("ok, it's here in actions")
 }
 
 //Products
@@ -53,6 +53,7 @@ export const invProd = (prodName, invProducts) => {
 		name: prodName,
 		payload: invProducts
 	}
+	console.log('invPorducts, action:', invProducts)
 }
 
 export const updateProd = (products) => {

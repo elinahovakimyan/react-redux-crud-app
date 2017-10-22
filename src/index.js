@@ -3,7 +3,6 @@ import {Provider} from 'react-redux'
 import createStore from 'redux'
 import store from './store'
 import { Router, browserHistory, Route, IndexRoute } from 'react-router';
-import routes from './routes';
 import { render } from 'react-dom';
 import App from './components/App';
 import CustomersTable from './components/customers/CustomersTable';

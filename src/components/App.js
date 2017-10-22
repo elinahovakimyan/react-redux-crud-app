@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Navbar, Nav, NavItem} from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { fetchProd, fetchCust } from '../actions/index'
+import { fetchProd, fetchCust, addInv } from '../actions/index'
 import CustomersTable from './customers/CustomersTable'
 import ProductsTable from './products/ProductsTable'
 import InvoicesTable from './invoices/InvoicesTable'
@@ -17,16 +17,21 @@ class App extends Component {
 	constructor(props) {
 		super();
 	}
-	componentWillMount(){
+	componentDidMount(){
 		fetch('/api/products')
 			.then( products => products.json() )
 			.then(products => {
-			this.props.onFetchProd(products)
+				this.props.onFetchProd(products)
 		});
 		fetch('/api/customers')
 			.then( customers => customers.json() )
 			.then(customers => {
-			  this.props.onFetchCust(customers)
+				this.props.onFetchCust(customers)
+		})
+		fetch('api/invoices')
+			.then( invoices => invoices.json() )
+			.then(invoices => {
+				this.props.onFetchInv(invoices) 
 		})
  	}
 	
@@ -48,6 +53,9 @@ const mapDispatchToProps = dispatch => {
 		},
 	    onFetchProd(products) {
 	      	dispatch(fetchProd(products))
+	    },
+	    onFetchInv(invoices) {
+	    	dispatch(addInv(invoices))
 	    }
 	}
 }
