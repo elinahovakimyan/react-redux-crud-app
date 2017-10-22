@@ -4,6 +4,7 @@ import { deleteProd } from '../../actions/index'
 import { Button, Table, Modal } from 'react-bootstrap'
 import CreateProd from './CreateProd'
 import EditProd from './EditProd'
+import { Helmet } from 'react-helmet'
 import Del from 'react-icons/lib/fa/trash-o'
 
 class ProductsTable extends Component {
@@ -28,6 +29,9 @@ class ProductsTable extends Component {
   render() {
     return (
       <div className="tablePage">
+        <Helmet>
+          <title>Products List</title>
+        </Helmet>
         <h1> Product List </h1> 
         <CreateProd products={this.props.products}/>
         <Table responsive>

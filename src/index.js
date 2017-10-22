@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Provider} from 'react-redux'
+import React, { Component } from 'react';
+import { Provider } from 'react-redux'
 import createStore from 'redux'
 import store from './store'
 import { Router, browserHistory, Route, IndexRoute } from 'react-router';

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Table, Form, FormGroup, Col, ControlLabel, FormControl } from 'react-bootstrap'
 import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 import { fetchCust, fetchProd, addInv, invProd } from '../../actions'
 
 class AddInvoice extends Component {
@@ -47,6 +48,9 @@ class AddInvoice extends Component {
 	render() {
 		return (
 		  	<div className="invoice">
+		  		<Helmet>
+			    	<title>Add a new invoice</title>
+			    </Helmet>
 		  		<h1> Add Invoice </h1>
 				<Form horizontal onSubmit={this.handleSubmit}>
 					<Button type="submit" className="inlinebtn">

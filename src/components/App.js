@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchProd, fetchCust, addInv } from '../actions/index'
-import CustomersTable from './customers/CustomersTable'
-import ProductsTable from './products/ProductsTable'
-import InvoicesTable from './invoices/InvoicesTable'
-import InvoiceEdit from './invoices/InvoiceEdit'
-import AddInvoice from './invoices/AddInvoice'
 import Navigation from './Navigation'
  
 class App extends Component {

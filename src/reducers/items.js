@@ -15,16 +15,14 @@ const items = (state = initialState, action) => {
 	        return {...state, customers: state.customers.concat(action.payload
 	        )}
 
-	    case 'UPDATE_CUST':
-	        return {...state, 
-	        	customers: state.customers.concat(action.payload
-	        	// id: products[products.length-1]
-	        )}
-
 	    case 'DELETE_CUST':
-			return { customers: state.customers.filter(customer =>
-				customer.id !== action.id
-			)}
+			return state.filter(item => item._id !== action.gameId);
+
+		case 'UPDATE_CUST':
+			return state.map(item => {
+			if (item._id === action.game._id) return action.game;
+				return item;
+			});
 
 		case 'FETCH_PROD':
 	      	return {...state, products: state.products.concat(action.payload

@@ -5,6 +5,7 @@ import { Button, Table, Modal } from 'react-bootstrap'
 import CreateCust from './CreateCust'
 import EditCust from './EditCust'
 import Del from 'react-icons/lib/fa/trash-o'
+import { Helmet } from 'react-helmet'
 
 class CustomersTable extends Component {
 	constructor() {
@@ -30,6 +31,9 @@ class CustomersTable extends Component {
 	render() {
 		return (
 			<div className="tablePage">
+				<Helmet>
+			    	<title>Customers List</title>
+			    </Helmet>
 				<div className="titlepart">
 					<h1> Customer List </h1> 
 					<CreateCust customers={this.props.customers} />

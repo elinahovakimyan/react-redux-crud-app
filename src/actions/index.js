@@ -1,4 +1,12 @@
-let nextId = 0;
+function handleResponse(response) {
+  if (response.ok) {
+    return response.json();
+  } else {
+    let error = new Error(response.statusText);
+    error.response = response;
+    throw error;
+  }
+}
 
 //Customers
 
@@ -16,20 +24,58 @@ export const addCust = (customers) => {
 	}
 }
 
-export const updateCust = (customers) => {
+export const updatedCust = (customers) => {
 	return {
 		type: 'UPDATE_CUST',
 		payload: customers
 	}
 }
 
-export const deleteCust = (id) => {
+export const deletdCust = (id) => {
 	return {
 		type: 'DELETE_CUST',
 		id 
 	}
-	console.log("ok, it's here in actions")
 }
+
+export function saveCust(customers) {
+  return dispatch => {
+    return fetch('/api/customers', {
+      method: 'post',
+      body: JSON.stringify(customers),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(handleResponse)
+    .then(customers => dispatch(addCust(customers)));
+  }
+}
+
+export function updateCust(customers) {
+  return dispatch => {
+    return fetch(`/api/customers/${customers.id}`, {
+      method: 'put',
+      body: JSON.stringify(customers),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(handleResponse)
+    .then(customers => dispatch(updatedCust(customers)));
+  }
+}
+
+export function deleteCust(id) {
+  return dispatch => {
+    return fetch(`/api/customers/${id}`, {
+      method: 'delete',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(handleResponse)
+    .then(customers => dispatch(deleteCust(id)));
+  }
+}
+
 
 //Products
 

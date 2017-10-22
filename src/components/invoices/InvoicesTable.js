@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addInv } from '../../actions/index'
-import {Button, Table} from 'react-bootstrap'
-import {Link} from 'react-router'
+import { Button, Table } from 'react-bootstrap'
+import { Link } from 'react-router'
+import { Helmet } from 'react-helmet'
+
 
 class InvoicesTable extends Component {
   constructor() {
@@ -14,6 +16,9 @@ class InvoicesTable extends Component {
   render() {
     return (
       <div className="tablePage">
+        <Helmet>
+          <title>Invoices List</title>
+        </Helmet>
         <h1> Invoice List </h1> 
         <Button> <Link to="/add-invoice" className="link" activeClassName="active">Create </Link> </Button>
 
