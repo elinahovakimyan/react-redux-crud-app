@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import {Navbar, Nav, NavItem} from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { fetchProd, fetchCust, addInv } from '../actions/index'
 import CustomersTable from './customers/CustomersTable'
@@ -9,10 +8,6 @@ import InvoiceEdit from './invoices/InvoiceEdit'
 import AddInvoice from './invoices/AddInvoice'
 import Navigation from './Navigation'
  
-
-const pushState = (obj, title, url) => 
-	window.history.pushState(obj, title, url);
-
 class App extends Component {
 	constructor(props) {
 		super();
@@ -27,12 +22,12 @@ class App extends Component {
 			.then( customers => customers.json() )
 			.then(customers => {
 				this.props.onFetchCust(customers)
-		})
+		});
 		fetch('api/invoices')
 			.then( invoices => invoices.json() )
 			.then(invoices => {
 				this.props.onFetchInv(invoices) 
-		})
+		});
  	}
 	
 	render() {

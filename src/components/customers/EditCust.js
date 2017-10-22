@@ -19,6 +19,7 @@ class EditCust extends Component {
 		this.close = this.close.bind(this)
 		this.open = this.open.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this) 
+		this.handleChange = this.handleChange.bind(this)
 	}
 	close() {
 		this.setState({ showModal: false });
@@ -34,8 +35,15 @@ class EditCust extends Component {
 		}
 	}
 
-	handleChange(fieldName) {
-	    this.setState({ fieldName: this.fieldName.value })
+	handleChange(e) {
+		const fieldName = e.target.name;
+		const fieldVal = e.target.value;
+
+		console.log('Value:', fieldVal)
+		console.log('Name:', fieldName)
+		debugger;
+		this.setState({customers: {...this.state.customers, [fieldName]: fieldVal}})
+
 	}
 
 	handleSubmit(e) {
@@ -77,7 +85,8 @@ class EditCust extends Component {
 						        	type="text" 
 						        	placeholder="Name" 
 						        	value={this.props.customer.name}
-						        	onChange={this.handleChange.bind(this, 'name')}
+						        	onChange={this.handleChange}
+						        	name="name"
 	            					/>
 						      </Col>
 						    </FormGroup>
