@@ -22,8 +22,11 @@ class ProductsTable extends Component {
     this.setState({ showModal: true });
   }
   
-  handleDelete(id, products) {
-    this.props.onDeleteClick(id, products);
+  handleDelete(id) {
+    const { products } = this.props
+    let productsList = products.filter(item => item.id !== id )
+    console.log(productsList)
+    this.props.dispatch(deleteProd(productsList))
     this.close();
   }
   render() {
@@ -56,7 +59,7 @@ class ProductsTable extends Component {
                     <Modal.Title>Do you want to delete?</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <Button className="inlinebtn" onClick={this.handleDelete.bind(this, product.id)}> Delete </Button>
+                    <Button className="inlinebtn" onClick={this.handleDelete}> Delete </Button>
                     <Button className="inlinebtn" onClick={this.close}>Cancel</Button>
                   </Modal.Body>
                   <Modal.Footer>
@@ -81,17 +84,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onDeleteClick(id, products) {
-      dispatch(deleteProd(id, products));
-    }
-  }
-}
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(ProductsTable)
 
 

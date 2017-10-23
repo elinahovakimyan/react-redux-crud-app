@@ -99,7 +99,6 @@ export const invProd = (prodName, invProducts) => {
 		name: prodName,
 		payload: invProducts
 	}
-	console.log('invPorducts, action:', invProducts)
 }
 
 export const updateProd = (products) => {
@@ -109,11 +108,10 @@ export const updateProd = (products) => {
 	}
 }
 
-export const deleteProd = (id, products) => {
+export const deleteProd = (products) => {
 	return {
 		type: 'DELETE_PROD',
 		payload: products,
-		id
 	}
 }
 

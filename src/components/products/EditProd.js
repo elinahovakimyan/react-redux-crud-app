@@ -10,10 +10,8 @@ class EditProd extends Component {
 
 	    this.state = {
 			showModal: false,
-			product: {
-				name: '',
-				price: ''
-			}
+			name: props.product.name,
+			price: props.product.price
 		},
 		this.close = this.close.bind(this)
 		this.open = this.open.bind(this)
@@ -36,21 +34,37 @@ class EditProd extends Component {
 	// }
 
 	handleChange(e) {	    
-	    const fleldVal = e.target.value;
-	    this.setState({...this.state.product, [fieldName]: fleldVal})
+	    let value
+	    if(e.target.name === 'name') {
+	    	this.setState({
+	    		name: e.target.value
+	    	})
+	    } else {
+		    this.setState({
+		    	price: e.target.value
+		    })
+		}
 	}
 
 	handleSubmit(e) {
 		e.preventDefault()
-		const formValues = {
-			name: this.name.value,
-			price: this.price.value,
-		}
-		this.props.dispatch(updateProd(formValues))
+		const {product, products} = this.props
+		let productsList = products.map(item => {
+			if( item.id === product.id) {
+				item = {
+					...item,
+					name: this.state.name,
+					price: this.state.price
+				}
+			}
+			return item
+		})
+		this.props.dispatch(updateProd(productsList))
 		this.close();
 	}
 
 	render() {
+		const {name, price} = this.state 
 	    return (
 	      	<div className="btnCreate">
 			    <a onClick={this.open}>
@@ -71,11 +85,12 @@ class EditProd extends Component {
 						      </Col>
 						      <Col sm={10}>
 						        <FormControl 
-						        	inputRef={(ref) => {this.name = ref}} 
+						        	inputRef={(ref) => {this.name = ref}}
+						        	name="name"
 						        	type="text" 
 						        	placeholder="Name" 
-						        	value={this.props.product.name}
-						        	onChange={this.handleChange.bind(this, 'name')}
+						        	value={name}
+						        	onChange={this.handleChange}
 	            					/>
 						      </Col>
 						    </FormGroup>
@@ -87,11 +102,12 @@ class EditProd extends Component {
 						      <Col sm={10}>
 						        <FormControl 
 						        	inputRef={(ref) => {this.price = ref}}
+						        	name="price"
 						        	type="number"
 						        	step="0.01" 
 						        	placeholder="Price" 
-						        	value={this.props.product.price}
-						        	onChange={this.handleChange.bind(this, 'price')}
+						        	value={price}
+						        	onChange={this.handleChange}
 	            				/>
 						      </Col>
 						    </FormGroup>
@@ -116,4 +132,14 @@ class EditProd extends Component {
   	}
 }
 
-export default EditProd
+const mapStateToProps = state => {
+	return {
+		products: state.items.products
+	}
+	
+}
+
+export default connect(
+	mapStateToProps,
+	null
+)(EditProd)
