@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Modal, Form, FormGroup, Col, ControlLabel, FormControl  } from 'react-bootstrap'
-import {updateProd} from '../../actions'
+import { updateProd } from '../../actions'
 import { connect } from 'react-redux';
 import { isEqual } from 'lodash';
 
@@ -26,12 +26,6 @@ class EditProd extends Component {
 	open() {
 		this.setState({ showModal: true });
 	}
-
-	// componentWillReceiveProps(nextProps) {
-	// 	if (!isEqual(nextProps.product, this.state.product)) {
-	// 	  this.setState({...this.state, product: nextProps.product});
-	// 	}
-	// }
 
 	handleChange(e) {	    
 	    let value

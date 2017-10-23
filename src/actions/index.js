@@ -1,13 +1,3 @@
-function handleResponse(response) {
-  if (response.ok) {
-    return response.json();
-  } else {
-    let error = new Error(response.statusText);
-    error.response = response;
-    throw error;
-  }
-}
-
 //Customers
 
 export const fetchCust = (customers) => {
@@ -24,58 +14,19 @@ export const addCust = (customers) => {
 	}
 }
 
-export const updatedCust = (customers) => {
+export const updateCust = (customers) => {
 	return {
 		type: 'UPDATE_CUST',
 		payload: customers
 	}
 }
 
-export const deletdCust = (id) => {
+export const deleteCust = (customers) => {
 	return {
 		type: 'DELETE_CUST',
-		id 
+		payload: customers 
 	}
 }
-
-export function saveCust(customers) {
-  return dispatch => {
-    return fetch('/api/customers', {
-      method: 'post',
-      body: JSON.stringify(customers),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(handleResponse)
-    .then(customers => dispatch(addCust(customers)));
-  }
-}
-
-export function updateCust(customers) {
-  return dispatch => {
-    return fetch(`/api/customers/${customers.id}`, {
-      method: 'put',
-      body: JSON.stringify(customers),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(handleResponse)
-    .then(customers => dispatch(updatedCust(customers)));
-  }
-}
-
-export function deleteCust(id) {
-  return dispatch => {
-    return fetch(`/api/customers/${id}`, {
-      method: 'delete',
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(handleResponse)
-    .then(customers => dispatch(deleteCust(id)));
-  }
-}
-
 
 //Products
 

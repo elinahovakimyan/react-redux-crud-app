@@ -4,6 +4,7 @@ import { deleteCust } from '../../actions/index'
 import { Button, Table, Modal } from 'react-bootstrap'
 import CreateCust from './CreateCust'
 import EditCust from './EditCust'
+import DelCust from './DelCust'
 import Del from 'react-icons/lib/fa/trash-o'
 import { Helmet } from 'react-helmet'
 
@@ -55,27 +56,7 @@ class CustomersTable extends Component {
 								<td>{customer.address}</td>
 								<td>{customer.phone}</td>
 								<td><EditCust customer={customer}/></td>
-								<td onClick={this.open}> <Del/> </td>
-              
-				                <Modal show={this.state.showModal} onHide={this.close}>
-				                  <Modal.Header closeButton>
-				                    <Modal.Title>Do you want to delete?</Modal.Title>
-				                  </Modal.Header>
-				                  <Modal.Body>
-				                    <Button className="inlinebtn" onClick={(id=customer.id, customers) => {
-				                    	debugger;
-										this.props.dispatch(deleteCust(id, customers));
-										this.close();
-										console.log("ok, it's here")
-									}}> Delete </Button>
-				                    <Button className="inlinebtn" onClick={this.close}>Cancel</Button>
-				                  </Modal.Body>
-				                  <Modal.Footer>
-				                    <Button onClick={this.close}>
-				                    	Close
-				                    </Button>
-				                  </Modal.Footer>
-				                </Modal>
+								<td> <DelCust customer={customer}/> </td>
 							</tr>
 	   					))}
 				    </tbody>

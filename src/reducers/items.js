@@ -19,15 +19,15 @@ const items = (state = initialState, action) => {
 	        	customers: state.customers.concat(action.payload
 	        )})
 
-	  //   case 'DELETE_CUST':
-			// return state.filter(item => item._id !== action.gameId);
+	    case 'DELETE_CUST':
+			return state.merge({
+				customers: action.payload
+			})
 
 		case 'UPDATE_CUST':
 			return state.merge({
-				customers: state.map(item => {
-				if (item._id === action.customer.id) return action.customer;
-					return item;
-			})})
+				customers: action.payload
+			})
 
 		case 'FETCH_PROD':
 	      	return state.merge({
@@ -36,8 +36,8 @@ const items = (state = initialState, action) => {
 
 	    case 'ADD_PROD':
 	        return state.merge({
-	        	products: action.payload
-	        })
+	        	products: state.products.concat(action.payload
+	        )})
 
 	    case 'INV_PROD':
 	        return state.merge({ 

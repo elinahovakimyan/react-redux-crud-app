@@ -10,11 +10,9 @@ class EditCust extends Component {
 
 	    this.state = {
 			showModal: false,
-			customer: {
-				name: '',
-				address: '',
-				phone: ''
-			},
+			name: props.customer.name,
+			address: props.customer.address,
+			phone: props.customer.phone,
 			loading: false
 		},
 		this.close = this.close.bind(this)
@@ -30,70 +28,43 @@ class EditCust extends Component {
 		this.setState({ showModal: true });
 	};
 
-	// componentWillReceiveProps(nextProps) {
-	// 	if (!isEqual(nextProps.customer, this.state.customer)) {
-	// 	  this.setState({...this.state, customer: nextProps.customer});
-	// 	}
-	// }
-
-	// handleChange(e) {
-	// 	const fieldName = e.target.name;
-	// 	const fieldVal = e.target.value;
-
-	// 	console.log('Value:', fieldName, fieldVal)
-
-
-	// 	this.setState({fieldName: fieldVal})
-
-	// }
-
-	// handleSubmit(e) {
-	// 	e.preventDefault()
-	// 	const formValues = () => {
-	// 		return [
-	// 			{
-	// 				name: this.name.value,
-	// 				price: this.price.value,
-	// 			}
-	// 		]
-	// 	}
-	// 	this.props.dispatch(updateProd(formValues()))
-	// 	this.close();
-	// }
-
-	componentWillReceiveProps(nextProps) {
-		this.setState({
-			id: nextProps.customers.id,
-			name: nextProps.customers.name,
-			address: nextProps.customers.address,
-			phone: nextProps.customers.phone,
-
-		});
-	};
-
-	handleChange(e) {
-		if (!!this.state.errors[e.target.name]) {
-			let errors = Object.assign({}, this.state.errors);
-			delete errors[e.target.name];
-			this.setState({
-				[e.target.name]: e.target.value,
-				errors
-			})
-		} else {
-			this.setState({ [e.target.name]: e.target.value });
+	handleChange(e) {	    
+	    let value
+	    if(e.target.name === 'name') {
+	    	this.setState({
+	    		name: e.target.value
+	    	})
+	    } else if(e.target.value === 'address') {
+	    	this.setState({
+		    	address: e.target.value
+		    })
+	    } else {
+		    this.setState({
+		    	phone: e.target.value
+		    })
 		}
-	};
+	}
 
 	handleSubmit(e) {
-		e.preventDefault();
-
-		const { id, name, address, phone } = this.state;
-		this.setState({ loading: true });
-		this.props.updateCust({ id, name, address, phone })
-			.catch((err) => err.response.json().then(({errors}) => this.setState({ errors, loading: false })));
+		e.preventDefault()
+		const {customer, customers} = this.props
+		let customersList = customers.map(item => {
+			if( item.id === customer.id) {
+				item = {
+					...item,
+					name: this.state.name,
+					address: this.state.address,
+					phone: this.state.phone
+				}
+			}
+			return item
+		})
+		this.props.dispatch(updateCust(customersList))
+		this.close();
 	}
 
 	render() {
+		const {name, phone, address} = this.state
 	    return (
 	      	<div className="btnCreate">
 			    <a onClick={this.open}>
@@ -117,7 +88,7 @@ class EditCust extends Component {
 						        	inputRef={(ref) => {this.name = ref}} 
 						        	type="text" 
 						        	placeholder="Name" 
-						        	value={this.props.customer.name}
+						        	value={name}
 						        	onChange={this.handleChange}
 						        	name="name"
 	            					/>
@@ -133,7 +104,7 @@ class EditCust extends Component {
 						        	inputRef={(ref) => {this.address = ref}} 
 						        	type="text" 
 						        	placeholder="Address" 
-						        	value={this.props.customer.address}
+						        	value={address}
 						        	onChange={this.handleChange}
 						        	name="address"
 	            					/>
@@ -149,7 +120,7 @@ class EditCust extends Component {
 						        	inputRef={(ref) => {this.phone = ref}} 
 						        	type="text" 
 						        	placeholder="Phone" 
-						        	value={this.props.customer.phone}
+						        	value={phone}
 						        	onChange={this.handleChange}
 						        	name="phone"
 	            					/>
@@ -176,4 +147,14 @@ class EditCust extends Component {
   	}
 }
 
-export default connect()(EditCust)
+const mapStateToProps = state => {
+	return {
+		customers: state.items.customers
+	}
+	
+}
+
+export default connect(
+	mapStateToProps,
+	null
+)(EditCust)
