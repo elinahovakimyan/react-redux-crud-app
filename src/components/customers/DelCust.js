@@ -21,9 +21,7 @@ class DelCust extends Component {
   
   handleDelete(e) {
     const { customers, customer } = this.props
-    console.log(customer.id)
     let customersList = customers.filter(item => item.id != customer.id )
-    console.log(customersList)
     this.props.dispatch(deleteCust(customersList))
     this.close();
   }

@@ -21,12 +21,11 @@ class DelProd extends Component {
   
   handleDelete(e) {
     const { products, product } = this.props
-    console.log(product.id)
     let productsList = products.filter(item => item.id != product.id )
-    console.log(productsList)
     this.props.dispatch(deleteProd(productsList))
     this.close();
   }
+  
   render() {
     return (
       <div className="deleteModal">

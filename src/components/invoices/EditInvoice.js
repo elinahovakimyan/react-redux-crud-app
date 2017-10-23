@@ -11,19 +11,6 @@ class InvoiceEdit extends Component {
 		this.handleAddProduct = this.handleAddProduct.bind(this)
 
 	}
-	componentWillMount(){
-		fetch('/api/customers')
-			.then( customers => customers.json() )
-			.then(customers => {
-			  this.props.dispatch(fetchCust(customers))
-		})
-		fetch('/api/products')
-			.then( products => products.json() )
-			.then(products => {
-			  this.props.dispatch(fetchProd(products))
-		})
-
-	}
 	handleAddProduct(e) {
 		e.preventDefault()
 		const formValues = () => {

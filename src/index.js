@@ -21,6 +21,7 @@ render(
 				<Route path="/products" component={ProductsTable} />
 				<Route path="/invoice-list" component={InvoicesTable} />
 				<Route path="/add-invoice" component={AddInvoice} />
+				<Route path="/invoices" component={InvoicesTable} />
 	        </Route>
 	    </Router>
 	</Provider>,

@@ -44,14 +44,6 @@ export const addProd = (products) => {
 	}
 }
 
-export const invProd = (prodName, invProducts) => {
-	return {
-		type: 'INV_PROD',
-		name: prodName,
-		payload: invProducts
-	}
-}
-
 export const updateProd = (products) => {
 	return {
 		type: 'UPDATE_PROD',
@@ -69,10 +61,24 @@ export const deleteProd = (products) => {
 
 //Invoices 
 
-export const addInv = (products) => {
+export const invProd = (invProducts) => {
+	return {
+		type: 'INV_PROD',
+		payload: invProducts
+	}
+}
+
+export const fetchInv = (invoices) => {
+	return {
+		type: 'FETCH_INV',		
+		payload: invoices
+	}
+}
+
+export const addInv = (invoices) => {
 	return {
 		type: 'ADD_INV',
-		payload: products
+		payload: invoices
 	}
 }
 

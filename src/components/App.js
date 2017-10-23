@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchProd, fetchCust, addInv } from '../actions/index'
+import { fetchProd, fetchCust, fetchInv } from '../actions/index'
 import Navigation from './Navigation'
  
 class App extends Component {
@@ -45,7 +45,7 @@ const mapDispatchToProps = dispatch => {
 	      	dispatch(fetchProd(products))
 	    },
 	    onFetchInv(invoices) {
-	    	dispatch(addInv(invoices))
+	    	dispatch(fetchInv(invoices))
 	    }
 	}
 }

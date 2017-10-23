@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Table, Form, FormGroup, Col, ControlLabel, FormControl } from 'react-bootstrap'
 import { connect } from 'react-redux'
+import { withRouter, Link } from 'react-router'
 import { Helmet } from 'react-helmet'
 import { fetchCust, fetchProd, addInv, invProd } from '../../actions'
 
@@ -9,8 +10,9 @@ class AddInvoice extends Component {
 		super();
 		this.state={
 			showModal: false,
-			select: '',
+			selected: null,
 			invProducts: [],
+			invoices: [],
 			products: [],
 			customers: []
 		}
@@ -19,33 +21,73 @@ class AddInvoice extends Component {
 		this.handleSelect = this.handleSelect.bind(this)
 
 	}
-	handleSelect(e) {
+	handleQuantity(e) {
+		if(!!e) {
+			return parseFloat(e.target.value)
+		}
+		return 1;
+	}
+
+	handleDiscount(e) {
+		if(!!e) {
+			return parseFloat(e.target.value)
+		}
+		return 0;
+	}
+
+	handleSelect({target}) {
 		this.setState({
-			select: e.target.value
+			selected: Number(target.value)
 		})
 	}
 	handleAddProduct(e) {
 		e.preventDefault()
-		this.props.dispatch(invProd(this.state.select))
-		console.log('invProducts Add:', this.state.invProducts)
+		const {products} = this.props
+		const {selected} = this.state
+		let invProducts = products.filter(item => item.id === selected)
+		this.props.dispatch(invProd(invProducts))
+	}
 
+	createId() {
+
+		if(!this.state.invoices.length) {
+			return 0;
+		}
+		return this.state.invoices.map(item => item.id)[this.state.invoices.length-1] + 1
+	}
+
+	countTotal() {
+		let prices = this.props.invProducts.map(prod => parseFloat(prod.price))
+		const getSum = (total, num) => {
+		    return total + num;
+		}
+		const sum = prices.reduce(getSum, 0);
+		const qty = this.handleQuantity();
+		console.log(qty)
+		const discount = this.handleDiscount();
+		console.log(discount)
+		const timesQty = sum * qty
+		const total = timesQty - discount*timesQty/100
+		return total
 	}
 
 	handleSubmit(e) {
 		e.preventDefault()
-		const formValues = () => {
-			return [
-				{
-					discount: this.discount.value,
-					customer: this.customer.value,
-					total: this.props.total
-				}
-			]
+		const invoices = {
+			id: this.createId(),
+			discount: this.discount.value,
+			customer: this.customer.value,
+			total: this.countTotal()
 		}
-		this.props.dispatch(addInv(formValues()))
+
+		console.log(invoices)
+		this.props.dispatch(addInv(invoices))
+		this.props.router.push(`/invoices`)
 	}
 
+
 	render() {
+		const { invProducts } = this.props
 		return (
 		  	<div className="invoice">
 		  		<Helmet>
@@ -61,15 +103,19 @@ class AddInvoice extends Component {
 						<FormControl 
 							inputRef={(ref) => {this.discount = ref}} 
 							type="number" 
+							onChange={this.handleDiscount}
 							className="discount"
 							placeholder="Discount" 
 						/>
 					</FormGroup>
 				    <FormGroup controlId="formControlsSelect">
 						<ControlLabel>Customer</ControlLabel>
-						<FormControl componentClass="select" placeholder="Customer">
+						<FormControl 
+							componentClass="select" 
+							placeholder="Customer"
+							inputRef={(ref) => {this.customer = ref}}>
 						{this.props.customers.map(customer => (
-							<option value={customer.name} >{customer.name}</option>
+							<option key={customer.id} value={customer.name} defaultValue={customer.name}>{customer.name}</option>
 						))}
 						</FormControl>
 					</FormGroup>
@@ -83,9 +129,11 @@ class AddInvoice extends Component {
 							componentClass="select" 
 							placeholder="select"
 							onChange={this.handleSelect} 
-							value={this.state.select}>
+							inputRef={(ref) => {this.address = ref}}>
 						{this.props.products.map(product => (
-							<option value={product.name} key={product.id}>{product.name}</option>
+							<option value={product.id} key={product.id}>
+								{product.name}
+							</option>
 						))}
 						</FormControl>
 					</FormGroup>
@@ -104,39 +152,40 @@ class AddInvoice extends Component {
 		            </tr>
 		          </thead>
 		          <tbody>
-		            {this.props.invProducts.map(product => (
-		              <tr key={product.id}>
-		                <td>{product.name}</td>
-		                <td>{product.price}</td>
-		                <td> 
-		                	<FormControl 
-								inputRef={(ref) => {this.name = ref}}
-								type="number" 
-								className="discount"
-								defaultValue="1"
-								placeholder="Quantity" 
-							/> 
-						</td>
-		              </tr>
-		            ))} 
+		    		  {invProducts && invProducts.map(product => (
+                      <tr key={product.id}>
+                        <td>{product.name}</td>
+                        <td>{product.price}</td>
+                        <td> 
+                            <FormControl 
+                                inputRef={(ref) => {this.name = ref}}
+                                type="number" 
+                                className="discount"
+                                defaultValue="1"
+                                placeholder="Quantity"
+                                onChange={this.handleQuantity}
+                            /> 
+                        </td>
+                      </tr>
+                    ))}
 		          </tbody>
 		        </Table>
         
+        		<h2> Total: {this.countTotal()} </h2>
 
 		    </div>
 		);
 	}
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({items}) => {
 	return {
-		customers: state.items.customers,
-		products: state.items.products,
-		invProducts: state.items.invProducts
+		customers: items.customers,
+		products: items.products,
+		invProducts: items.invProducts
 	}
 }
 
-export default connect(
-	mapStateToProps,
-	null
-)(AddInvoice)
+export default withRouter(connect(
+	mapStateToProps
+)(AddInvoice))

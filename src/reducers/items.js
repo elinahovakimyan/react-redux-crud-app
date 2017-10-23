@@ -29,6 +29,8 @@ const items = (state = initialState, action) => {
 				customers: action.payload
 			})
 
+
+
 		case 'FETCH_PROD':
 	      	return state.merge({
 	      		products: action.payload
@@ -38,13 +40,8 @@ const items = (state = initialState, action) => {
 	        return state.merge({
 	        	products: state.products.concat(action.payload
 	        )})
-
-	    case 'INV_PROD':
-	        return state.merge({ 
-	        	invProducts: state.invProducts.concat(action.payload
-	        )})
-
-	    case 'UPDATE_PROD':
+	        
+  		case 'UPDATE_PROD':
 	        return state.merge({ 
 	        	products: action.payload
 	        })
@@ -53,6 +50,25 @@ const items = (state = initialState, action) => {
 			return state.merge({ 
 				products: action.payload
 			})
+
+
+
+		case 'FETCH_INV':
+	        return state.merge({	        	
+	        	invoices: state.invoices.concat(action.payload
+	        )})
+
+	    case 'ADD_INV':
+	        return state.merge({
+	        	invoices: state.invoices.concat(action.payload
+	        )})
+
+	    case 'INV_PROD':
+	        return state.merge({ 
+	        	invProducts: state.invProducts.concat(action.payload
+	        )})
+
+	  
 
 		default:
 			return state

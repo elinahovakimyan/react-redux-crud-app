@@ -1,19 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addInv } from '../../actions/index'
+import { addInv } from '../../actions'
 import { Button, Table } from 'react-bootstrap'
 import { Link } from 'react-router'
 import { Helmet } from 'react-helmet'
 
 
 class InvoicesTable extends Component {
+
   constructor() {
     super();
     this.state = {
       invoices: []
     }
   }
+
   render() {
+    console.log(this.props.invoices)
+    const {invoices} = this.props
     return (
       <div className="tablePage">
         <Helmet>
@@ -32,7 +36,7 @@ class InvoicesTable extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.invoices.map(invoice => (
+              {invoices.map(invoice => (
                 <tr key={invoice.id}>
                   <td>{invoice.id}</td>
                   <td>{invoice.customer}</td>
@@ -47,12 +51,12 @@ class InvoicesTable extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({items}) => {
   return {
-    invoices: state.items.invoices,
-    customers: state.items.customers,
-    products: state.items.products,
-    invProducts: state.items.invProducts
+    invoices: items.invoices,
+    customers: items.customers,
+    products: items.products,
+    invProducts: items.invProducts
   }
 }
 
