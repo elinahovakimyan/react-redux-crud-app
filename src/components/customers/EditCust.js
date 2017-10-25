@@ -85,7 +85,6 @@ class EditCust extends Component {
 						      </Col>
 						      <Col sm={10}>
 						        <FormControl 
-						        	inputRef={(ref) => {this.name = ref}} 
 						        	type="text" 
 						        	placeholder="Name" 
 						        	value={name}
@@ -101,7 +100,6 @@ class EditCust extends Component {
 						      </Col>
 						      <Col sm={10}>
 						        <FormControl 
-						        	inputRef={(ref) => {this.address = ref}} 
 						        	type="text" 
 						        	placeholder="Address" 
 						        	value={address}
@@ -117,7 +115,6 @@ class EditCust extends Component {
 						      </Col>
 						      <Col sm={10}>
 						        <FormControl 
-						        	inputRef={(ref) => {this.phone = ref}} 
 						        	type="text" 
 						        	placeholder="Phone" 
 						        	value={phone}

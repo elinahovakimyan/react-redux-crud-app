@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addInv } from '../../actions'
 import { Button, Table } from 'react-bootstrap'
+import EditInvoice from './EditInvoice'
+import DelInvoice from './DelInvoice'
 import { Link } from 'react-router'
 import { Helmet } from 'react-helmet'
 
@@ -16,15 +18,18 @@ class InvoicesTable extends Component {
   }
 
   render() {
-    console.log(this.props.invoices)
-    const {invoices} = this.props
+    const { invoices } = this.props
     return (
       <div className="tablePage">
         <Helmet>
           <title>Invoices List</title>
         </Helmet>
         <h1> Invoice List </h1> 
-        <Button> <Link to="/add-invoice" className="link" activeClassName="active">Create </Link> </Button>
+        <Button> 
+          <Link to="/add-invoice" className="link" activeClassName="active">
+            Create 
+          </Link> 
+        </Button>
 
         <Table responsive>
             <thead>
@@ -37,11 +42,15 @@ class InvoicesTable extends Component {
             </thead>
             <tbody>
               {invoices.map(invoice => (
-                <tr key={invoice.id}>
-                  <td>{invoice.id}</td>
+                <tr key={invoice.invId}>
+                  <td>{invoice.invId}</td>
                   <td>{invoice.customer}</td>
                   <td>{invoice.discount}</td>
                   <td>{invoice.total}</td>
+                  <td> 
+                    <Link to={{ pathname: "/edit-invoice", query: invoice }}> edit </Link>
+                  </td>
+                  <td> <DelInvoice invoice={invoice}/> </td>
                 </tr>
               ))}
             </tbody>

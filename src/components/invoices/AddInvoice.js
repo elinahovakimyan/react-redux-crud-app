@@ -3,11 +3,11 @@ import { Button, Table, Form, FormGroup, Col, ControlLabel, FormControl } from '
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router'
 import { Helmet } from 'react-helmet'
-import { fetchCust, fetchProd, addInv, invProd } from '../../actions'
+import { fetchCust, fetchProd, addInv, invProd, addInvId } from '../../actions'
 
 class AddInvoice extends Component {
 	constructor(props) {
-		super();
+		super(props);
 		this.state={
 			showModal: false,
 			selected: null,
@@ -17,7 +17,7 @@ class AddInvoice extends Component {
 			customers: [],
 			quantity: 1,
 			discount: 0,
-			idNum: 0
+			invId: props.invId
 		}
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.handleAddProduct = this.handleAddProduct.bind(this)
@@ -46,37 +46,36 @@ class AddInvoice extends Component {
 
 	handleAddProduct(e) {
 		e.preventDefault()
-		const {products} = this.props
-		const {selected} = this.state
+		const { products } = this.props
+		const { selected } = this.state
 		let invProducts = products.filter(item => item.id === selected)
 		this.props.dispatch(invProd(invProducts))
 	}
 
 	countTotal() {
 		let prices = this.props.invProducts.map(prod => parseFloat(prod.price))
-		const getSum = (total, num) => {
-		    return total + num;
-		}
+		const getSum = (total, num) => total + num
 		const sum = prices.reduce(getSum, 0);
 		const qty = this.state.quantity;
 		const discount = this.state.discount;
-		const timesQty = sum * qty
-		const total = timesQty - discount*timesQty/100
+		const timesQty = sum * qty;
+		const total = timesQty - (discount * timesQty / 100);
 		return total
 	}
 
 	createId() {
-		const {invoices} = this.state
-		console.log(invoices)
 		this.setState({
-			idNum: this.state.idNum += 1
+			invId: this.state.invId++
 		})
+		console.log('create Id', this.state.invId)
+		this.props.dispatch(addInvId(this.state.invId))
+		return this.state.invId
 	}
+
 	handleSubmit(e) {
 		e.preventDefault()
-		const {idNum} = this.state
 		const invoices = {
-			id: this.createId(),
+			invId: this.createId(),
 			discount: this.discount.value,
 			customer: this.customer.value,
 			total: this.countTotal()
@@ -87,7 +86,8 @@ class AddInvoice extends Component {
 
 
 	render() {
-		const { invProducts } = this.props
+		const { invProducts, invId } = this.props
+		console.log('render:', invId)
 		return (
 		  	<div className="invoice">
 		  		<Helmet>
@@ -99,7 +99,7 @@ class AddInvoice extends Component {
 						Add Invoice 
 					</Button>
 				    <FormGroup controlId="discount">
-						<ControlLabel>Discount (%)</ControlLabel>
+						<ControlLabel> Discount (%) </ControlLabel>
 						<FormControl 
 							inputRef={(ref) => {this.discount = ref}} 
 							type="number" 
@@ -114,7 +114,8 @@ class AddInvoice extends Component {
 						<FormControl 
 							componentClass="select" 
 							placeholder="Customer"
-							inputRef={(ref) => {this.customer = ref}}>
+							inputRef={(ref) => {this.customer = ref}}
+						>
 						{this.props.customers.map(customer => (
 							<option key={customer.id} 
 									value={customer.name} 
@@ -188,7 +189,8 @@ const mapStateToProps = ({items}) => {
 		customers: items.customers,
 		products: items.products,
 		invProducts: items.invProducts,
-		invoices: items.invoices
+		invoices: items.invoices,
+		invId: items.invId
 	}
 }
 

@@ -3,38 +3,30 @@ import { Button, Table, Form, FormGroup, Col, ControlLabel, FormControl } from '
 import { connect } from 'react-redux'
 import { fetchCust, fetchProd, addInv } from '../../actions'
 
-class InvoiceEdit extends Component {
+class EditInvoice extends Component {
 	constructor(props) {
 		super();
 		this.state={showModal: false}
-		this.handleSubmit = this.handleSubmit.bind(this)
+		this.handleUpdate = this.handleUpdate.bind(this)
 		this.handleAddProduct = this.handleAddProduct.bind(this)
-
 	}
+
 	handleAddProduct(e) {
 		e.preventDefault()
-		const formValues = () => {
-			return [
-				{
-					pselect: this.pselect[selctedIndex].value
-				}
-			]
+		const formValues = {
+			pselect: this.pselect[selctedIndex].value
 		}
-		console.log(formValues())
-		this.props.dispatch(invProd(formValues()))
+		this.props.dispatch(invProd(formValues))
 	}
-	handleSubmit(e) {
-		e.preventDefault()
-		const formValues = () => {
-			return [
-				{
-					discount: this.discount.value,
-					customer: this.customer.value,
-					total: this.props.total
-				}
-			]
+
+	handleUpdate(e) {
+		e.preventDefault() 
+		const newValues = {
+			discount: this.discount.value,
+			customer: this.customer.value,
+			total: this.props.total
 		}
-		this.props.dispatch(addInv(formValues()))
+		this.props.dispatch(updateInv(newValues))
 	}
 	
 
@@ -42,14 +34,15 @@ class InvoiceEdit extends Component {
 		return (
 		  	<div className="invoice">
 		  		<h1> Edit Invoice </h1>
-				<Form horizontal onSubmit={this.handleSubmit}>
+				<Form horizontal onSubmit={this.handleUpdate}>
 				    <FormGroup controlId="discount">
 						<ControlLabel>Discount (%)</ControlLabel>
 						<FormControl 
 							inputRef={(ref) => {this.discount = ref}} 
 							type="number" 
 							className="discount"
-							placeholder="Discount" 
+							placeholder="Discount"
+							value={this.props.invoice.discount}
 						/>
 					</FormGroup>
 				    <FormGroup controlId="formControlsSelect">
@@ -122,11 +115,12 @@ const mapStateToProps = (state) => {
 	return {
 		customers: state.items.customers,
 		products: state.items.products,
-		invProducts: state.items.invProducts
+		invProducts: state.items.invProducts,
+		invoices: state.items.invoices
 	}
 }
 
 export default connect(
 	mapStateToProps,
 	null
-)(InvoiceEdit)
+)(EditInvoice)

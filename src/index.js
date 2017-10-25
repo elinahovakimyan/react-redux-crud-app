@@ -7,6 +7,8 @@ import { render } from 'react-dom';
 import App from './components/App';
 import CustomersTable from './components/customers/CustomersTable';
 import InvoicesTable from './components/invoices/InvoicesTable';
+import EditInvoice from './components/invoices/EditInvoice';
+
 import ProductsTable from './components/products/ProductsTable';
 import AddInvoice from './components/invoices/AddInvoice';
 import 'react-select/dist/react-select.css';
@@ -22,6 +24,8 @@ render(
 				<Route path="/invoice-list" component={InvoicesTable} />
 				<Route path="/add-invoice" component={AddInvoice} />
 				<Route path="/invoices" component={InvoicesTable} />
+				<Route path="/edit-invoice" component={EditInvoice} />
+
 	        </Route>
 	    </Router>
 	</Provider>,

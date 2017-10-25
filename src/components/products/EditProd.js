@@ -58,7 +58,7 @@ class EditProd extends Component {
 	}
 
 	render() {
-		const {name, price} = this.state 
+		const {name, price} = this.state
 	    return (
 	      	<div className="btnCreate">
 			    <a onClick={this.open}>

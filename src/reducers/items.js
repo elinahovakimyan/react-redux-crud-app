@@ -4,7 +4,8 @@ const initialState = Immutable({
 	customers: [],
 	products: [],
 	invProducts: [],
-	invoices: []
+	invoices: [],
+	invId: 0
 })
 
 const items = (state = initialState, action) => {
@@ -31,6 +32,7 @@ const items = (state = initialState, action) => {
 
 
 
+
 		case 'FETCH_PROD':
 	      	return state.merge({
 	      		products: action.payload
@@ -53,6 +55,7 @@ const items = (state = initialState, action) => {
 
 
 
+
 		case 'FETCH_INV':
 	        return state.merge({	        	
 	        	invoices: state.invoices.concat(action.payload
@@ -68,7 +71,22 @@ const items = (state = initialState, action) => {
 	        	invProducts: state.invProducts.concat(action.payload
 	        )})
 
-	  
+	    case 'UPDATE_INV':
+	        return state.merge({ 
+	        	invoices: action.payload
+	        })
+
+		case 'DELETE_INV':
+			return state.merge({ 
+				invoices: action.payload
+			})
+
+		case 'INV_ID':
+			return state.merge({
+				invId: action.payload
+			})
+
+
 
 		default:
 			return state
