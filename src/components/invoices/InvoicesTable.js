@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addInv } from '../../actions'
 import { Button, Table } from 'react-bootstrap'
-import EditInvoice from './EditInvoice'
 import DelInvoice from './DelInvoice'
 import { Link } from 'react-router'
 import { Helmet } from 'react-helmet'
@@ -47,9 +46,6 @@ class InvoicesTable extends Component {
                   <td>{invoice.customer}</td>
                   <td>{invoice.discount}</td>
                   <td>{invoice.total}</td>
-                  <td> 
-                    <Link to={{ pathname: "/edit-invoice", query: invoice }}> edit </Link>
-                  </td>
                   <td> <DelInvoice invoice={invoice}/> </td>
                 </tr>
               ))}

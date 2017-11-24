@@ -67,7 +67,6 @@ class AddInvoice extends Component {
 		this.setState({
 			invId: this.state.invId++
 		})
-		console.log('create Id', this.state.invId)
 		this.props.dispatch(addInvId(this.state.invId))
 		return this.state.invId
 	}
@@ -81,13 +80,16 @@ class AddInvoice extends Component {
 			total: this.countTotal()
 		}
 		this.props.dispatch(addInv(invoices))
+		this.setState({
+			invProducts: []
+		})
 		this.props.router.push(`/invoices`)
+
 	}
 
 
 	render() {
-		const { invProducts, invId } = this.props
-		console.log('render:', invId)
+		const { invProducts } = this.props
 		return (
 		  	<div className="invoice">
 		  		<Helmet>
@@ -104,7 +106,6 @@ class AddInvoice extends Component {
 							inputRef={(ref) => {this.discount = ref}} 
 							type="number" 
 							onChange={this.handleDiscount}
-							value={this.state.discount}
 							className="discount"
 							placeholder="Discount" 
 						/>
@@ -167,7 +168,7 @@ class AddInvoice extends Component {
                                 inputRef={(ref) => {this.name = ref}}
                                 type="number" 
                                 className="discount"
-                                value={this.state.quantity}
+                                defaultValue="1"
                                 placeholder="Quantity"
                                 onChange={this.handleQuantity}
                             /> 
