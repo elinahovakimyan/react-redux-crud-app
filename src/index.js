@@ -12,7 +12,7 @@ import AddInvoice from './components/invoices/AddInvoice';
 import 'react-select/dist/react-select.css';
 import './style/App.css'
 
-render(
+render( 
 	<Provider store={store}>
 		<Router history={browserHistory}>
 	        <Route path="/" component={App}>

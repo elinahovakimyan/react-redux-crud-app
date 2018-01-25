@@ -17,6 +17,7 @@ class AddInvoice extends Component {
 			customers: [],
 			quantity: 1,
 			discount: 0,
+			buttonDisabled: false,
 			invId: props.invId
 		}
 		this.handleSubmit = this.handleSubmit.bind(this)
@@ -34,20 +35,22 @@ class AddInvoice extends Component {
 
 	handleDiscount(e) {
 		this.setState({
-			discount: parseInt(e.target.value)
+			discount: parseInt(e.target.value || 0)
 		})
 	}
 
 	handleSelect({target}) {
 		this.setState({
-			selected: Number(target.value)
+			selected: Number(target.value),
+			buttonDisabled: false
 		})
 	}
 
 	handleAddProduct(e) {
-		e.preventDefault()
-		const { products } = this.props
-		const { selected } = this.state
+		e.preventDefault();
+		const { products } = this.props;
+		const { selected } = this.state;
+		this.setState({ buttonDisabled: true })
 		let invProducts = products.filter(item => item.id === selected)
 		this.props.dispatch(invProd(invProducts))
 	}
@@ -60,7 +63,7 @@ class AddInvoice extends Component {
 		const discount = this.state.discount;
 		const timesQty = sum * qty;
 		const total = timesQty - (discount * timesQty / 100);
-		return total
+		return total;
 	}
 
 	createId() {
@@ -98,44 +101,44 @@ class AddInvoice extends Component {
 		  		<h1> Add Invoice </h1>
 				<Form horizontal onSubmit={this.handleSubmit}>
 					<Button type="submit" className="inlinebtn">
-						Add Invoice 
+						Add Invoice
 					</Button>
 				    <FormGroup controlId="discount">
 						<ControlLabel> Discount (%) </ControlLabel>
-						<FormControl 
-							inputRef={(ref) => {this.discount = ref}} 
-							type="number" 
+						<FormControl
+							inputRef={(ref) => {this.discount = ref}}
+							type="number"
 							onChange={this.handleDiscount}
 							className="discount"
-							placeholder="Discount" 
+							placeholder="Discount"
 						/>
 					</FormGroup>
 				    <FormGroup controlId="formControlsSelect">
 						<ControlLabel>Customer</ControlLabel>
-						<FormControl 
-							componentClass="select" 
+						<FormControl
+							componentClass="select"
 							placeholder="Customer"
 							inputRef={(ref) => {this.customer = ref}}
 						>
 						{this.props.customers.map(customer => (
-							<option key={customer.id} 
-									value={customer.name} 
+							<option key={customer.id}
+									value={customer.name}
 									defaultValue={customer.name}>
 								{customer.name}
 							</option>
 						))}
 						</FormControl>
 					</FormGroup>
-					
+
 				</Form>
 
 				<Form horizontal onSubmit={this.handleAddProduct}>
 					<FormGroup controlId="formControlsSelect">
 						<ControlLabel>Add product</ControlLabel>
-						<FormControl 
-							componentClass="select" 
+						<FormControl
+							componentClass="select"
 							placeholder="select"
-							onChange={this.handleSelect} 
+							onChange={this.handleSelect}
 							inputRef={(ref) => {this.address = ref}}>
 						{this.props.products.map(product => (
 							<option value={product.id} key={product.id}>
@@ -145,7 +148,7 @@ class AddInvoice extends Component {
 						</FormControl>
 					</FormGroup>
 				    <FormGroup>
-				        <Button type="submit">
+				        <Button type="submit" disabled={this.state.buttonDisabled}>
 				        	Add
 				        </Button>
 				    </FormGroup>
@@ -163,21 +166,21 @@ class AddInvoice extends Component {
                       <tr key={product.id}>
                         <td>{product.name}</td>
                         <td>{product.price}</td>
-                        <td> 
-                            <FormControl 
+                        <td>
+                            <FormControl
                                 inputRef={(ref) => {this.name = ref}}
-                                type="number" 
+                                type="number"
                                 className="discount"
                                 defaultValue="1"
                                 placeholder="Quantity"
                                 onChange={this.handleQuantity}
-                            /> 
+                            />
                         </td>
                       </tr>
                     ))}
 		          </tbody>
 		        </Table>
-        
+
         		<h2> Total: {this.countTotal()} </h2>
 
 		    </div>
